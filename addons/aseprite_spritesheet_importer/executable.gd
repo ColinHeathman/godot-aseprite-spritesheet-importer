@@ -12,6 +12,25 @@ class Options:
 	var datafile_path: String
 	var flattened_path: String
 
+func validate() -> Error:
+	if config == null:
+		return ERR_UNCONFIGURED
+
+	# Execute Aseprite and capture stdout, stderr
+	var args = ["--version"]
+	var output: Array = []
+	var exit_code = self.execute(args, output)
+	if exit_code != OK:
+		print("Can't run Aseprite:\n", output[0])
+		return ERR_UNCONFIGURED
+	if not output[0].match("Aseprite*"):
+		print("Invalid Aseprite executable:\n", output[0])
+		return ERR_UNCONFIGURED
+	return OK
+
+func execute(args: Array, output: Array) -> Error:
+	return OS.execute(self.config.get_aseprite_cmd(), args, output, true)
+
 func export_spritesheet(source_file: String, aseprite_options: Options) -> Array:
 	# Export from Aseprite
 	var absolute_source_file: String = ProjectSettings.globalize_path(source_file)
@@ -45,7 +64,7 @@ func export_spritesheet(source_file: String, aseprite_options: Options) -> Array
 	
 	# Execute Aseprite and capture stdout, stderr
 	var output: Array = []
-	var exit_code = OS.execute(self.config.get_aseprite_cmd(), args, output, true)
+	var exit_code = self.execute(args, output)
 	if aseprite_options.flatten_layer_groups:
 		DirAccess.remove_absolute(aseprite_options.flattened_path)
 	if exit_code != OK:
@@ -70,7 +89,7 @@ func export_flattened_groups(absolute_source_file: String, absolute_flattened_pa
 
 	# Execute Aseprite and capture stdout, stderr
 	var output: Array = []
-	var exit_code = OS.execute(self.config.get_aseprite_cmd(), args, output, true)
+	var exit_code = self.execute(args, output)
 	if exit_code != OK:
 		print("Failed to flatten layer groups\n", output[0])
 		return ERR_SCRIPT_FAILED

@@ -91,6 +91,9 @@ func _get_option_visibility(_path: String, _option_name: StringName, _options: D
 	return true
 
 func _import(source_file: String, save_path: String, options: Dictionary, _platform_variants: Array[String], _gen_files: Array[String]) -> Error:
+	var err = self.executable.validate()
+	if err != OK:
+		return err
 	var importer = AsepriteImporter.new()
 	importer.use_editor(self.editor)
 	importer.use_source_file(source_file, save_path, _get_save_extension())

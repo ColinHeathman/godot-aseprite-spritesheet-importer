@@ -15,7 +15,7 @@ Thanks to Kenney.nl for the sprites used in these examples
 
 ## Key Features
 
-- **Support for multiple Layers, Frames, and Slices**: Supports complex Aseprite files with multiple characters or images organized using Layer Groups and/or Slices. This is very useful if you want to make a character both the body and equipment in the same file.
+- **Support for multiple Layers, Frames, and Slices**: Supports complex Aseprite files with multiple characters or images organized using Layer Groups and/or Slices. This is very useful if you want to make a character with both the body and equipment in the same file.
 
 - **Support for nine-patch StyleBox**: Useful for creating GUI elements.
 
@@ -61,10 +61,16 @@ Tags with the suffix `loop` or `cycle` will be set as looping within the SpriteF
    - Open your Godot project.
    - Navigate to `Project > Project Settings > Plugins`.
    - Enable the "Aseprite Spritesheet Importer" plugin.
-   - Navigate to `Editor > Editor Settings > Aseprite > General`.
-   - Configure the `Command Path` to the path of the aseprite executable. Default: `aseprite`
 
-3. **Usage**:
+3. **Custom install location for Aseprite**:
+   - If you've installed Aseprite to a custom location (or you're using the Steam version)
+   - Navigate to `Editor > Editor Settings > Aseprite > General`.
+   - Configure the `Command Path` to the path of the aseprite executable.
+	   - MacOS Default: "/Applications/Aseprite.app/Contents/MacOS/aseprite"
+	   - Windows Default: "%ProgramFiles%\\Aseprite\\Aseprite.exe"
+	   - Otherwise: "aseprite"
+
+4. **Usage**:
    - Once activated, `.ase` and `.aseprite` files will show up in the FileSystem dock.
    - Select the Aseprite file you want to import.
    - Configure any additional settings based in the import dock `Import > Spritesheet`.
