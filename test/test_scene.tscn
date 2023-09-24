@@ -1,4 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://y6a73h1ow8xw"]
+[gd_scene load_steps=22 format=3 uid="uid://y6a73h1ow8xw"]
+
+[ext_resource type="StyleBox" uid="uid://b6dbeh0x5l0n3" path="res://test/stylebox/textures/stylebox_style_stylebox.tres" id="1_ddaua"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tpuuv"]
 load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
@@ -152,3 +154,10 @@ visible = false
 sprite_frames = SubResource("SpriteFrames_8h5fp")
 animation = &"walk-loop"
 autoplay = "walk-loop"
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 147.0
+offset_top = 9.0
+offset_right = 182.0
+offset_bottom = 45.0
+theme_override_styles/panel = ExtResource("1_ddaua")

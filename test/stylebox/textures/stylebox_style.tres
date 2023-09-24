@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dacj4tigyyddi"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m20a5"]
+load_path = "res://.godot/imported/stylebox_spritesheet.png-d9a043b10858e3e9e44b81cb4daaf024.ctex"
+
+[resource]
+atlas = SubResource("CompressedTexture2D_m20a5")
+region = Rect2(0, 0, 64, 64)

@@ -178,11 +178,15 @@ func _flatten_slice_regions() -> void:
 			for slice_name in self._slices:
 				var atlas_texture_name = "%s_%s_%d" % [self.spritesheet_name, slice_name, i]
 				self._named_atlas_regions[atlas_texture_name] = self._slice_regions[i]["default"][slice_name]
+				if slice_name in self._slice_styleboxes:
+					self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
 	else:
 		# For 1 frame
 		for slice_name in self._slices:
 			var atlas_texture_name = "%s_%s" % [self.spritesheet_name, slice_name]
 			self._named_atlas_regions[atlas_texture_name] = self._slice_regions[0]["default"][slice_name]
+			if slice_name in self._slice_styleboxes:
+				self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
 
 func _flatten_frame_regions_split() -> void:
 	self._named_atlas_regions = {}
@@ -244,7 +248,6 @@ func _make_load_styleboxes() -> void:
 		# Does stylebox exist?
 		if atlas_texture_name not in self._named_stylebox_regions:
 			continue
-
 		var stylebox_path: String = "%s/%s_stylebox.tres" % [self.textures_folder, atlas_texture_name]
 		var stylebox: StyleBoxTexture
 		if FileAccess.file_exists(stylebox_path):
