@@ -1,31 +1,31 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://cxgilwt8gytt7"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://d1bohfda0pmwt"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qt26n"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ka11b"]
 load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sdpq1"]
-atlas = SubResource("CompressedTexture2D_qt26n")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx8tp"]
+atlas = SubResource("CompressedTexture2D_ka11b")
 region = Rect2(0, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s338k"]
-atlas = SubResource("CompressedTexture2D_qt26n")
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv2rw"]
+atlas = SubResource("CompressedTexture2D_ka11b")
 region = Rect2(64, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_js0aw"]
-atlas = SubResource("CompressedTexture2D_qt26n")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryfb1"]
+atlas = SubResource("CompressedTexture2D_ka11b")
 region = Rect2(128, 64, 64, 64)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sdpq1")
+"texture": SubResource("AtlasTexture_qx8tp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s338k")
+"texture": SubResource("AtlasTexture_vv2rw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_js0aw")
+"texture": SubResource("AtlasTexture_ryfb1")
 }],
 "loop": true,
 "name": &"walk-loop",

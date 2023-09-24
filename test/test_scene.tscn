@@ -1,31 +1,154 @@
-[gd_scene load_steps=5 format=3 uid="uid://y6a73h1ow8xw"]
+[gd_scene load_steps=21 format=3 uid="uid://y6a73h1ow8xw"]
 
-[ext_resource type="SpriteFrames" uid="uid://cgaw2tf8r3ltq" path="res://test/full/textures/player_green_guy_base_spriteframes.tres" id="1_hmfnk"]
-[ext_resource type="SpriteFrames" uid="uid://cxgilwt8gytt7" path="res://test/full/textures/player_red_guy_base_spriteframes.tres" id="2_fwy46"]
-[ext_resource type="SpriteFrames" uid="uid://4bn7tju6mrml" path="res://test/full/textures/player_green_guy_hat_spriteframes.tres" id="2_h7qv2"]
-[ext_resource type="SpriteFrames" uid="uid://lphnfawxy40w" path="res://test/full/textures/player_red_guy_hat_spriteframes.tres" id="4_tht3y"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tpuuv"]
+load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dahb"]
+atlas = SubResource("CompressedTexture2D_tpuuv")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq4l2"]
+atlas = SubResource("CompressedTexture2D_tpuuv")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lrof"]
+atlas = SubResource("CompressedTexture2D_tpuuv")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejjkl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dahb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lq4l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lrof")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3ebgx"]
+load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpd5f"]
+atlas = SubResource("CompressedTexture2D_3ebgx")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_any24"]
+atlas = SubResource("CompressedTexture2D_3ebgx")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qa473"]
+atlas = SubResource("CompressedTexture2D_3ebgx")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bb05m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpd5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_any24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qa473")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jur3o"]
+load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wm7ep"]
+atlas = SubResource("CompressedTexture2D_jur3o")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxv3t"]
+atlas = SubResource("CompressedTexture2D_jur3o")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynhav"]
+atlas = SubResource("CompressedTexture2D_jur3o")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uj6tl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wm7ep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxv3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynhav")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1w3qn"]
+load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr605"]
+atlas = SubResource("CompressedTexture2D_1w3qn")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8rio"]
+atlas = SubResource("CompressedTexture2D_1w3qn")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dmjg"]
+atlas = SubResource("CompressedTexture2D_1w3qn")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8h5fp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr605")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8rio")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dmjg")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
 
 [node name="TestScene" type="Node2D"]
 
 [node name="GreenGuy" type="AnimatedSprite2D" parent="."]
 position = Vector2(32, 32)
-sprite_frames = ExtResource("1_hmfnk")
+sprite_frames = SubResource("SpriteFrames_ejjkl")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
 [node name="GreenGuyHat" type="AnimatedSprite2D" parent="GreenGuy"]
-sprite_frames = ExtResource("2_h7qv2")
+sprite_frames = SubResource("SpriteFrames_bb05m")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
 [node name="RedGuy" type="AnimatedSprite2D" parent="."]
 position = Vector2(99, 32)
-sprite_frames = ExtResource("2_fwy46")
+sprite_frames = SubResource("SpriteFrames_uj6tl")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
 [node name="RedGuyHat" type="AnimatedSprite2D" parent="RedGuy"]
 visible = false
-sprite_frames = ExtResource("4_tht3y")
+sprite_frames = SubResource("SpriteFrames_8h5fp")
 animation = &"walk-loop"
 autoplay = "walk-loop"

@@ -1,7 +1,15 @@
 
-#  Godot Aseprite Spritesheet Importer
+# <img align="center" src="./icon.png" /> Godot Aseprite Spritesheet Importer
+
+
 
 A simple yet powerful Godot plugin designed to streamline importing spritesheets and animations from Aseprite.
+
+<img align="center" src="./screenshots/aseprite.gif" />
+
+<img align="center" src="./screenshots/atlas_textures.gif" />
+
+<img align="center" src="./screenshots/spriteframes.gif" />
 
 ## Key Features
 
