@@ -3,7 +3,7 @@ class_name AsepritePluginConfig
 extends RefCounted
 
 const command_key = "aseprite/general/command_path"
-const windows_command_default_value = "%ProgramFiles%\\Aseprite\\Aseprite.exe"
+const windows_command_default_value = "C:\\Program Files\\Aseprite\\Aseprite.exe"
 const mac_os_command_default_value = "/Applications/Aseprite.app/Contents/MacOS/aseprite"
 const command_default_value = "aseprite"
 
@@ -11,7 +11,7 @@ var editor_settings: EditorSettings
 
 func setup_editor_settings() -> void:
 	if not self.editor_settings.has_setting(command_key):
-		self.editor_settings.set_initial_value(command_key, get_default_command(), false)
+		self.editor_settings.set_setting(command_key, get_default_command())
 		self.editor_settings.add_property_info({
 			"name": command_key,
 			"type": TYPE_STRING,
