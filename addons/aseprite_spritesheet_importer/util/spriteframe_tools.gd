@@ -120,7 +120,7 @@ func _save_spriteframes() -> Error:
 
 		self.editor.get_resource_filesystem().update_file(sprite_frames_path)
 		self._named_spriteframes[spriteframes_name].take_over_path(sprite_frames_path)
-	
+
 	return OK
 
 func _add_animations() -> void:
@@ -152,9 +152,9 @@ func _add_animations() -> void:
 			spriteframes.set_animation_loop(anim_name, anim_name.ends_with("loop") or anim_name.ends_with("cycle"))
 
 			# Animation direction
-			var frame_range = range(tag.from, tag.to+1) # forwards 
+			var frame_range = range(tag.from, tag.to+1) # forwards
 			if tag.direction == "reverse":
-				frame_range = range(tag.to, tag.from-1, -1) # backwards 
+				frame_range = range(tag.to, tag.from-1, -1) # backwards
 			if tag.direction == "pingpong":
 				frame_range = range(tag.from, tag.to) + range(tag.to, tag.from, -1) # ping-pong
 

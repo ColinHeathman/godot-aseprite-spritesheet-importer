@@ -115,7 +115,7 @@ func _read_slices() -> void:
 		# Make Stylebox?
 		if "center" not in slice.keys[0]:
 			continue
-		
+
 		self._slice_styleboxes[slice.name] = Rect2i(
 			slice.keys[0].center.x,
 			slice.keys[0].center.y,
@@ -135,7 +135,7 @@ func _get_slice_bounds(slice_name, frame_number) -> Rect2i:
 func _read_slice_regions() -> void:
 	self._slice_regions = []
 	self._slice_regions.resize(self._frame_regions.size())
-	
+
 	for i in range(self._frame_regions.size()):
 		self._slice_regions[i] = {}
 		for layer_name in self._frame_regions[i]:
@@ -234,17 +234,17 @@ func _save_atlas_textures() -> Error:
 
 		self.editor.get_resource_filesystem().update_file(atlas_texture_path)
 		self._named_atlas_textures[atlas_texture_name].take_over_path(atlas_texture_path)
-	
+
 	return OK
 
 func _make_load_styleboxes() -> void:
 	self._named_atlas_styleboxes = {}
 	for atlas_texture_name in self._named_atlas_textures:
-		
+
 		# Does stylebox exist?
 		if atlas_texture_name not in self._named_stylebox_regions:
 			continue
-			
+
 		var stylebox_path: String = "%s/%s_stylebox.tres" % [self.textures_folder, atlas_texture_name]
 		var stylebox: StyleBoxTexture
 		if FileAccess.file_exists(stylebox_path):
@@ -275,5 +275,5 @@ func _save_atlas_styleboxes() -> Error:
 
 		self.editor.get_resource_filesystem().update_file(stylebox_path)
 		self._named_atlas_styleboxes[atlas_texture_name].take_over_path(stylebox_path)
-	
+
 	return OK

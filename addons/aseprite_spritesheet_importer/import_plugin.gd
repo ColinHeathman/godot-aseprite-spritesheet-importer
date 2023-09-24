@@ -51,7 +51,7 @@ const KEEP_JSON = {
 
 func _get_priority() -> float:
 	return 5.0
-	
+
 func _get_import_order() -> int:
 	return 0
 

@@ -51,7 +51,7 @@ func use_executable(executable: AsepriteExecutable) -> void:
 
 @warning_ignore("shadowed_variable")
 func use_import_plugin(import_plugin: EditorImportPlugin) -> void:
-	self.import_plugin = import_plugin	
+	self.import_plugin = import_plugin
 
 func run() -> Error:
 	var steps = [
@@ -90,11 +90,11 @@ func _validate() -> Error:
 	if fail:
 		return FAILED
 	return OK
-	
+
 func _make_fallback_texture() -> Error:
 	# Get empty AtlasTexture as fallback
 	self.texture_path = "%s.%s" % [self.save_path, self.save_extension]
-	
+
 	# Setup AtlasTexture
 	self.atex = AtlasTexture.new()
 	self.atex.atlas = PlaceholderTexture2D.new()
@@ -102,7 +102,7 @@ func _make_fallback_texture() -> Error:
 	self.atex.region.position.y = 0
 	self.atex.region.size.x = 1
 	self.atex.region.size.y = 1
-	
+
 	# Save to texture_path
 	var err = ResourceSaver.save(atex, texture_path)
 	if err != OK:
@@ -126,7 +126,7 @@ func _export_spritesheet() -> Error:
 	if not self.import_options.keep_json:
 		DirAccess.remove_absolute(self.aseprite_options.datafile_path)
 		editor_file_system.update_file(self.aseprite_options.datafile_path)
-		
+
 	# Refresh view of exported file
 	editor_file_system.update_file(textures_folder)
 	editor_file_system.update_file(aseprite_options.spritesheet_path)
