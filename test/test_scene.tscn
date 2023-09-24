@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://y6a73h1ow8xw"]
+
+[ext_resource type="SpriteFrames" uid="uid://cgaw2tf8r3ltq" path="res://test/full/textures/player_green_guy_base_spriteframes.tres" id="1_hmfnk"]
+[ext_resource type="SpriteFrames" uid="uid://cxgilwt8gytt7" path="res://test/full/textures/player_red_guy_base_spriteframes.tres" id="2_fwy46"]
+[ext_resource type="SpriteFrames" uid="uid://4bn7tju6mrml" path="res://test/full/textures/player_green_guy_hat_spriteframes.tres" id="2_h7qv2"]
+[ext_resource type="SpriteFrames" uid="uid://lphnfawxy40w" path="res://test/full/textures/player_red_guy_hat_spriteframes.tres" id="4_tht3y"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="GreenGuy" type="AnimatedSprite2D" parent="."]
+position = Vector2(32, 32)
+sprite_frames = ExtResource("1_hmfnk")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="GreenGuyHat" type="AnimatedSprite2D" parent="GreenGuy"]
+sprite_frames = ExtResource("2_h7qv2")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="RedGuy" type="AnimatedSprite2D" parent="."]
+position = Vector2(99, 32)
+sprite_frames = ExtResource("2_fwy46")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="RedGuyHat" type="AnimatedSprite2D" parent="RedGuy"]
+visible = false
+sprite_frames = ExtResource("4_tht3y")
+animation = &"walk-loop"
+autoplay = "walk-loop"
