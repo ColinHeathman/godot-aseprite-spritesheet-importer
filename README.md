@@ -11,6 +11,8 @@ A simple yet powerful Godot plugin designed to streamline importing spritesheets
 
 <img align="center" src="./screenshots/spriteframes.gif" />
 
+Thanks to Kenney.nl for the sprites used in these examples
+
 ## Key Features
 
 - **Support for multiple Layers, Frames, and Slices**: Supports complex Aseprite files with multiple characters or images organized using Layer Groups and/or Slices. This is very useful if you want to make a character both the body and equipment in the same file.
