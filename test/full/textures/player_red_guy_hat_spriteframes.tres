@@ -1,31 +1,20 @@
-[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://cacqhbpy6jlut"]
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://b4u13df75s3wu"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ka11b"]
-load_path = "res://.godot/imported/player_spritesheet.png-8c639ae24b61a1f97578fb8757b7cb47.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wkakv"]
-atlas = SubResource("CompressedTexture2D_ka11b")
-region = Rect2(0, 192, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lev5y"]
-atlas = SubResource("CompressedTexture2D_ka11b")
-region = Rect2(64, 192, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8nblf"]
-atlas = SubResource("CompressedTexture2D_ka11b")
-region = Rect2(128, 192, 64, 64)
+[ext_resource type="Texture2D" uid="uid://cnwq5okt6f6l1" path="res://test/full/textures/player_red_guy_hat_0.tres" id="1_qnpae"]
+[ext_resource type="Texture2D" uid="uid://ctwhkgnf3tp70" path="res://test/full/textures/player_red_guy_hat_1.tres" id="2_q6o3j"]
+[ext_resource type="Texture2D" uid="uid://c7yvivql0x3l7" path="res://test/full/textures/player_red_guy_hat_2.tres" id="3_n3jvk"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wkakv")
+"texture": ExtResource("1_qnpae")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lev5y")
+"texture": ExtResource("2_q6o3j")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8nblf")
+"texture": ExtResource("3_n3jvk")
 }],
 "loop": true,
 "name": &"walk-loop",

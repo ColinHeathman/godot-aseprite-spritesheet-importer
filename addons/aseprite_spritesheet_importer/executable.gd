@@ -2,7 +2,23 @@
 class_name AsepriteExecutable
 extends RefCounted
 
-var config: AsepritePluginConfig
+enum SheetType {
+	DEFAULT,
+	HORIZONTAL,
+	VERTICAL,
+	ROWS,
+	COLUMNS,
+	PACKED,
+}
+
+var _sheet_type_args = [
+	"default",
+	"horizontal",
+	"vertical",
+	"rows",
+	"columns",
+	"packed",
+]
 
 class Options:
 	var all_layers: bool
@@ -11,6 +27,9 @@ class Options:
 	var spritesheet_path: String
 	var datafile_path: String
 	var flattened_path: String
+	var sheet_type: SheetType
+
+var config: AsepritePluginConfig
 
 func validate() -> Error:
 	if config == null:
@@ -53,6 +72,9 @@ func export_spritesheet(source_file: String, aseprite_options: Options) -> Array
 
 	if aseprite_options.split_layers:
 		args += ["--split-layers"]
+
+	if aseprite_options.sheet_type != SheetType.DEFAULT:
+		args += ["--sheet-type", _sheet_type_args[aseprite_options.sheet_type]]
 
 	args += ["--sheet", absolute_spritesheet_path]
 	args += ["--data", absolute_datafile_path]

@@ -43,6 +43,7 @@ func use_import_options(import_options: Dictionary) -> void:
 	opts.spritesheet_path = "%s/%s_spritesheet.png" % [textures_folder, source_file_no_ext]
 	opts.datafile_path = "%s/%s_data.json" % [textures_folder, source_file_no_ext]
 	opts.flattened_path = "%s/%s_flattened.ase" % [textures_folder, source_file_no_ext]
+	opts.sheet_type = import_options.sheet_type
 	self.aseprite_options = opts
 
 @warning_ignore("shadowed_variable")

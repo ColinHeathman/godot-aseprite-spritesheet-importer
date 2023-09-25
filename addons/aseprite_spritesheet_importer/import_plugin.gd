@@ -7,6 +7,7 @@ var editor: EditorInterface
 
 enum Presets { DEFAULT }
 
+
 const EXPORT_HIDDEN_LAYERS = {
 	"name": "export_hidden_layers",
 	"default_value": false,
@@ -41,6 +42,15 @@ const READ_FRAMERATE = {
 	"name": "read_framerate",
 	"default_value": true,
 	"description": "Calculate framerate for Spriteframes from frame delay",
+}
+
+const SHEET_TYPE = {
+	"name": "sheet_type",
+	"default_value": AsepriteExecutable.SheetType.DEFAULT,
+	"description": "Sheet type to export",
+	"property_hint": PROPERTY_HINT_ENUM,
+	"hint_string": "default,horizontal,vertical,rows,columns,packed",
+	
 }
 
 const KEEP_JSON = {
@@ -83,7 +93,7 @@ func _get_preset_name(preset_index: int) -> String:
 func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 	match preset_index:
 		Presets.DEFAULT:
-			return [EXPORT_HIDDEN_LAYERS, FLATTEN_LAYER_GROUPS, SPLIT_LAYERS, GENERATE_ATLAS_TEXTURES, GENERATE_SPRITEFRAMES, READ_FRAMERATE, KEEP_JSON]
+			return [EXPORT_HIDDEN_LAYERS, FLATTEN_LAYER_GROUPS, SPLIT_LAYERS, GENERATE_ATLAS_TEXTURES, GENERATE_SPRITEFRAMES, READ_FRAMERATE, SHEET_TYPE, KEEP_JSON]
 		_:
 			return []
 
