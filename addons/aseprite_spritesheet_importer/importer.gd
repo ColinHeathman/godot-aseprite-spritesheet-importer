@@ -37,13 +37,24 @@ func use_source_file(source_file: String, save_path: String, save_extension: Str
 func use_import_options(import_options: Dictionary) -> void:
 	self.import_options = import_options
 	var opts = AsepriteExecutable.Options.new()
-	opts.all_layers = import_options.export_hidden_layers
-	opts.split_layers = import_options.split_layers
-	opts.flatten_layer_groups = import_options.flatten_layer_groups
+	opts.all_layers = import_options["layers/export_hidden_layers"]
+	opts.split_layers = import_options["layers/split_layers"]
+	opts.flatten_layer_groups = import_options["layers/flatten_layer_groups"]
 	opts.spritesheet_path = "%s/%s_spritesheet.png" % [textures_folder, source_file_no_ext]
 	opts.datafile_path = "%s/%s_data.json" % [textures_folder, source_file_no_ext]
 	opts.flattened_path = "%s/%s_flattened.ase" % [textures_folder, source_file_no_ext]
-	opts.sheet_type = import_options.sheet_type
+	opts.sheet_type = import_options["export_options/sheet_type"]
+	opts.sheet_width = import_options["export_options/sheet_width"]
+	opts.sheet_height = import_options["export_options/sheet_height"]
+	opts.sheet_columns = import_options["export_options/sheet_columns"]
+	opts.sheet_rows = import_options["export_options/sheet_rows"]
+	opts.border_padding = import_options["export_options/border_padding"]
+	opts.shape_padding = import_options["export_options/shape_padding"]
+	opts.inner_padding = import_options["export_options/inner_padding"]
+	# only trim if slices aren't being used
+	# this is because of a limitation in how slices are implemented in Aseprite
+	opts.trim = import_options["export_options/trim"] and not (import_options["generate_resources/atlas_textures"] or import_options["generate_resources/spriteframes"])
+	opts.extrude = import_options["export_options/extrude"]
 	self.aseprite_options = opts
 
 @warning_ignore("shadowed_variable")
@@ -124,7 +135,7 @@ func _export_spritesheet() -> Error:
 	var editor_file_system = self.editor.get_resource_filesystem()
 
 	# Delete JSON if necessary
-	if not self.import_options.keep_json:
+	if not self.import_options["generate_resources/keep_json"]:
 		DirAccess.remove_absolute(self.aseprite_options.datafile_path)
 		editor_file_system.update_file(self.aseprite_options.datafile_path)
 
@@ -148,26 +159,26 @@ func _load_spritesheet() -> Error:
 	return OK
 
 func _generate_atlas_textures() -> Error:
-	if not self.import_options.generate_atlas_textures:
+	if not self.import_options["generate_resources/atlas_textures"]:
 		return OK
 
 	var atlas_tools = AsepriteUtilAtlasTools.new()
 	atlas_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
 	atlas_tools.use_texture(self.spritesheet_texture)
 	atlas_tools.use_editor(self.editor)
-	atlas_tools.split_layers = self.import_options.split_layers
+	atlas_tools.split_layers = self.import_options["layers/split_layers"]
 	return atlas_tools.run()
 
 func _generate_spriteframes() -> Error:
-	if not self.import_options.generate_spriteframes:
+	if not self.import_options["generate_resources/spriteframes"]:
 		return OK
 
 	var spriteframe_tools = AsepriteUtilSpriteFrameTools.new()
 	spriteframe_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
 	spriteframe_tools.use_texture(self.spritesheet_texture)
 	spriteframe_tools.use_editor(self.editor)
-	spriteframe_tools.split_layers = self.import_options.split_layers
-	spriteframe_tools.read_framerate = self.import_options.read_framerate
+	spriteframe_tools.split_layers = self.import_options["layers/split_layers"]
+	spriteframe_tools.read_framerate = self.import_options["generate_resources/read_framerate"]
 	return spriteframe_tools.run()
 
 func _save_final_atlas_texture() -> Error:

@@ -12,11 +12,20 @@ dest_files=["res://.godot/imported/player.ase-aeefd24e4d7e0ca30ce19a27103e8af0.r
 
 [params]
 
-export_hidden_layers=false
-flatten_layer_groups=true
-split_layers=true
-generate_atlas_textures=true
-generate_spriteframes=true
-read_framerate=true
-sheet_type=0
-keep_json=false
+layers/export_hidden_layers=false
+layers/flatten_layer_groups=true
+layers/split_layers=true
+generate_resources/atlas_textures=true
+generate_resources/spriteframes=true
+generate_resources/read_framerate=true
+generate_resources/keep_json=false
+export_options/sheet_type=0
+export_options/sheet_width=0
+export_options/sheet_height=0
+export_options/sheet_columns=0
+export_options/sheet_rows=0
+export_options/border_padding=1
+export_options/shape_padding=0
+export_options/inner_padding=0
+export_options/trim=false
+export_options/extrude=false

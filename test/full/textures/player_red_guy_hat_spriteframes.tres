@@ -1,20 +1,20 @@
-[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://b4u13df75s3wu"]
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://b2va1fllwsoxg"]
 
-[ext_resource type="Texture2D" uid="uid://cnwq5okt6f6l1" path="res://test/full/textures/player_red_guy_hat_0.tres" id="1_qnpae"]
-[ext_resource type="Texture2D" uid="uid://ctwhkgnf3tp70" path="res://test/full/textures/player_red_guy_hat_1.tres" id="2_q6o3j"]
-[ext_resource type="Texture2D" uid="uid://c7yvivql0x3l7" path="res://test/full/textures/player_red_guy_hat_2.tres" id="3_n3jvk"]
+[ext_resource type="Texture2D" uid="uid://cnr4bdjhtx0q2" path="res://test/full/textures/player_red_guy_hat_0.tres" id="1_op5bo"]
+[ext_resource type="Texture2D" uid="uid://ctuhqqeb3yy72" path="res://test/full/textures/player_red_guy_hat_1.tres" id="2_atmdb"]
+[ext_resource type="Texture2D" uid="uid://bslsvsqfamgc4" path="res://test/full/textures/player_red_guy_hat_2.tres" id="3_gb8fn"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_qnpae")
+"texture": ExtResource("1_op5bo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_q6o3j")
+"texture": ExtResource("2_atmdb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_n3jvk")
+"texture": ExtResource("3_gb8fn")
 }],
 "loop": true,
 "name": &"walk-loop",
