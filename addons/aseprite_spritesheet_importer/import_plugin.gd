@@ -55,6 +55,7 @@ const SHEET_TYPE = {
 	"description": "Sheet type to export",
 	"property_hint": PROPERTY_HINT_ENUM,
 	"hint_string": "default,horizontal,vertical,rows,columns,packed",
+	"usage": PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 }
 
 const SHEET_WIDTH = {
