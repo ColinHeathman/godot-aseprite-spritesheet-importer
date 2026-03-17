@@ -22,6 +22,7 @@ func _enter_tree():
 	importer.editor = self.get_editor_interface()
 	importer.executable = executable
 	add_import_plugin(importer)
+	
 
 func _exit_tree():
 	remove_import_plugin(importer)

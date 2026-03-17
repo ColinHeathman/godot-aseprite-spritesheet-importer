@@ -28,6 +28,15 @@ class Options:
 	var datafile_path: String
 	var flattened_path: String
 	var sheet_type: SheetType
+	var sheet_width: int
+	var sheet_height: int
+	var sheet_columns: int
+	var sheet_rows: int
+	var border_padding: int
+	var shape_padding: int
+	var inner_padding: int
+	var trim: bool
+	var extrude: bool
 
 var config: AsepritePluginConfig
 
@@ -75,7 +84,25 @@ func export_spritesheet(source_file: String, aseprite_options: Options) -> Array
 
 	if aseprite_options.sheet_type != SheetType.DEFAULT:
 		args += ["--sheet-type", _sheet_type_args[aseprite_options.sheet_type]]
-
+	if aseprite_options.sheet_type != SheetType.DEFAULT and aseprite_options.sheet_width > 0:
+		args += ["--sheet-width", "%d" % aseprite_options.sheet_width]
+	if aseprite_options.sheet_type != SheetType.DEFAULT and aseprite_options.sheet_height > 0:
+		args += ["--sheet-height", "%d" % aseprite_options.sheet_height]
+	if aseprite_options.sheet_type == SheetType.ROWS and aseprite_options.sheet_columns > 0:
+		args += ["--sheet-columns", "%d" % aseprite_options.sheet_columns]
+	if aseprite_options.sheet_type == SheetType.COLUMNS and aseprite_options.sheet_rows > 0:
+		args += ["--sheet-rows", "%d" % aseprite_options.sheet_rows]
+	if aseprite_options.border_padding > 0:
+		args += ["--border-padding", "%d" % aseprite_options.border_padding]
+	if aseprite_options.shape_padding > 0:
+		args += ["--shape-padding", "%d" % aseprite_options.shape_padding]
+	if aseprite_options.inner_padding > 0:
+		args += ["--inner-padding", "%d" % aseprite_options.inner_padding]
+	if aseprite_options.trim:
+		args += ["--trim"]
+	if aseprite_options.extrude:
+		args += ["--extrude"]
+	
 	args += ["--sheet", absolute_spritesheet_path]
 	args += ["--data", absolute_datafile_path]
 
