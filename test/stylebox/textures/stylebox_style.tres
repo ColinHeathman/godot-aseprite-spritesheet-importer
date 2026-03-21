@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://dacj4tigyyddi"]
-
-[ext_resource type="Texture2D" uid="uid://dpqfi4nr58sjh" path="res://test/stylebox/textures/stylebox_spritesheet.png" id="1_ewdir"]
-
-[resource]
-atlas = ExtResource("1_ewdir")
-region = Rect2(0, 0, 64, 64)

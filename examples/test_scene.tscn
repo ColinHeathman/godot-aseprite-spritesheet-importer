@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://y6a73h1ow8xw"]
+
+[ext_resource type="SpriteFrames" uid="uid://bcwg031ta8bfv" path="res://examples/full/textures/player_green_guy_base_spriteframes.tres" id="1_hldr7"]
+[ext_resource type="SpriteFrames" uid="uid://dmoigcyhxfmvx" path="res://examples/full/textures/player_green_guy_hat_spriteframes.tres" id="2_xdggk"]
+[ext_resource type="StyleBox" uid="uid://5sk86w2qqxeb" path="res://examples/stylebox/textures/stylebox_style_stylebox.tres" id="3_hldr7"]
+[ext_resource type="SpriteFrames" uid="uid://bim1kwsi64jtn" path="res://examples/full/textures/player_red_guy_base_spriteframes.tres" id="3_mwmxg"]
+[ext_resource type="SpriteFrames" uid="uid://djmo1s3ewhci3" path="res://examples/full/textures/player_red_guy_hat_spriteframes.tres" id="4_fkvod"]
+
+[node name="TestScene" type="Node2D" unique_id=1977151244]
+
+[node name="GreenGuy" type="AnimatedSprite2D" parent="." unique_id=593271239]
+position = Vector2(32, 32)
+sprite_frames = ExtResource("1_hldr7")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="GreenGuyHat" type="AnimatedSprite2D" parent="GreenGuy" unique_id=1399600521]
+sprite_frames = ExtResource("2_xdggk")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="RedGuy" type="AnimatedSprite2D" parent="." unique_id=1375067308]
+position = Vector2(99, 32)
+sprite_frames = ExtResource("3_mwmxg")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="RedGuyHat" type="AnimatedSprite2D" parent="RedGuy" unique_id=1697748137]
+visible = false
+sprite_frames = ExtResource("4_fkvod")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+
+[node name="Panel" type="Panel" parent="." unique_id=1069724399]
+offset_left = 147.0
+offset_top = 9.0
+offset_right = 182.0
+offset_bottom = 45.0
+theme_override_styles/panel = ExtResource("3_hldr7")

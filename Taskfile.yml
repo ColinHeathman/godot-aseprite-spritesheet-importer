@@ -1,0 +1,48 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GODOT_VERSION: "4.6.1-stable"
+  GODOT_URL: "https://github.com/godotengine/godot-builds/releases/download/{{.GODOT_VERSION}}/Godot_v{{.GODOT_VERSION}}_linux.x86_64.zip"
+  GODOT_ZIP: "Godot_v{{.GODOT_VERSION}}_linux.x86_64.zip"
+  TEMPLATES_URL: "https://github.com/godotengine/godot-builds/releases/download/{{.GODOT_VERSION}}/Godot_v{{.GODOT_VERSION}}_export_templates.tpz"
+  TEMPLATES_ZIP: Godot_{{.GODOT_VERSION}}_export_templates.tpz
+
+# https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_export_templates.tpz
+# https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_linux.x86_64.zip
+# https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_macos.universal.zip
+# https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_win64.exe.zip
+
+tasks:
+  editor:
+    deps: [download]
+    cmds:
+      - engine/godot --editor .
+    silent: true
+
+  download:
+    desc: Download and extract Godot engine
+    generates:
+      - engine/godot
+    cmds:
+      - mkdir -p engine
+      - |
+        if [ ! -f "engine/{{.GODOT_ZIP}}" ]; then
+          echo "Downloading Godot {{.GODOT_VERSION}}..."
+          wget -O "engine/{{.GODOT_ZIP}}" "{{.GODOT_URL}}"
+        fi
+      - |
+        if [ ! -f "engine/godot" ]; then
+          echo "Extracting Godot..."
+          cd engine && unzip -o "{{.GODOT_ZIP}}"
+          mv "Godot_v{{.GODOT_VERSION}}_linux.x86_64" godot
+          chmod +x godot
+          rm "{{.GODOT_ZIP}}"
+        fi
+
+  run:
+    desck: Runs the project as a e2e test
+    cmds:
+      - engine/godot --import --export-pack Linux linux_debug.pck
+      - engine/godot --main-pack linux_debug.pck

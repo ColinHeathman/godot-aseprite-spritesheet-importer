@@ -2,7 +2,7 @@
 class_name AsepriteUtilSpriteFrameTools
 extends AsepriteUtilAtlasTools
 
-var read_framerate: bool
+var ignore_framerate: bool
 
 var _frame_durations: Array
 var _named_spriteframes_atlas_names: Dictionary
@@ -158,7 +158,7 @@ func _add_animations() -> void:
 			if tag.direction == "pingpong":
 				frame_range = range(tag.from, tag.to) + range(tag.to, tag.from, -1) # ping-pong
 
-			if self.read_framerate:
+			if !self.ignore_framerate:
 				# FPS is based on the first animation frame
 				var ms_per_frame = float(self._frame_durations[tag.from])
 				var fps = 1.0 / (ms_per_frame / 1000.0)

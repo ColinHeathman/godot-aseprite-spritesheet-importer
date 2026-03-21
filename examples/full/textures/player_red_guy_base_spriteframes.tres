@@ -1,0 +1,22 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bim1kwsi64jtn"]
+
+[ext_resource type="Texture2D" uid="uid://4rmiufdnocym" path="res://examples/full/textures/player_red_guy_base_0.tres" id="1_jekct"]
+[ext_resource type="Texture2D" uid="uid://vw08mkkdcne5" path="res://examples/full/textures/player_red_guy_base_1.tres" id="2_befec"]
+[ext_resource type="Texture2D" uid="uid://bkvsobrnbcmeo" path="res://examples/full/textures/player_red_guy_base_2.tres" id="3_bv2a5"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jekct")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_befec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bv2a5")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]

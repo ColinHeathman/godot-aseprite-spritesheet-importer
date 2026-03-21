@@ -7,6 +7,7 @@ var editor: EditorInterface
 
 enum Presets { DEFAULT }
 
+# Layers
 const EXPORT_HIDDEN_LAYERS = {
 	"name": "layers/export_hidden_layers",
 	"default_value": false,
@@ -16,15 +17,16 @@ const EXPORT_HIDDEN_LAYERS = {
 const FLATTEN_LAYER_GROUPS = {
 	"name": "layers/flatten_layer_groups",
 	"default_value": false,
-	"description": "Flatten Layer Groups",
+	"description": "Flatten Layer Groups into a single layer",
 }
 
 const SPLIT_LAYERS = {
 	"name": "layers/split_layers",
 	"default_value": false,
-	"description": "Split Layers",
+	"description": "Split Layers into their own sprites",
 }
 
+# Generate Resources
 const GENERATE_ATLAS_TEXTURES = {
 	"name": "generate_resources/atlas_textures",
 	"default_value": false,
@@ -37,18 +39,13 @@ const GENERATE_SPRITEFRAMES = {
 	"description": "Generate SpriteFrames resources",
 }
 
-const READ_FRAMERATE = {
-	"name": "generate_resources/read_framerate",
-	"default_value": true,
-	"description": "Calculate framerate for Spriteframes from frame delay",
-}
-
-const KEEP_JSON = {
-	"name": "generate_resources/keep_json",
+const IGNORE_FRAMERATE = {
+	"name": "generate_resources/ignore_framerate",
 	"default_value": false,
-	"description": "Keep data json file for inspection",
+	"description": "Don't calculate framerate for Spriteframes from Aseprite frame delay",
 }
 
+# Export options
 const SHEET_TYPE = {
 	"name": "export_options/sheet_type",
 	"default_value": AsepriteExecutable.SheetType.DEFAULT,
@@ -103,13 +100,54 @@ const INNER_PADDING = {
 const TRIM = {
 	"name": "export_options/trim",
 	"default_value": false,
-	"description": "Trim images",
+	"description": "Trim images, removing transparent pixels",
 }
 
 const EXTRUDE = {
 	"name": "export_options/extrude",
 	"default_value": false,
 	"description": "Extrude all images duplicating all edges one pixel",
+}
+
+# Compress
+const COMPRESSION_MODE = {
+	"name": "compress/mode",
+	"default_value": AsepriteExecutable.SheetType.DEFAULT,
+	"description": """The compression mode to use,
+
+For 2D usage (compressed on disk, uncompressed on VRAM), the lossy and lossless modes are recommended. For 3D usage (compressed on VRAM) it depends on the target platform.
+If you intend to only use desktop, S3TC or BPTC are recommended. For only mobile, ETC2 is recommended.
+""",
+	"property_hint": PROPERTY_HINT_ENUM,
+	"hint_string": "Lossless,Lossy,Basis Universal,S3TC,ETC2,BPTC,ASTC",
+	"usage": PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
+}
+
+const COMPRESSION_LOSSY_QUALITY = {
+	"name": "compress/lossy_quality",
+	"default_value": 0.8,
+	"description": "The quality to use when using the [b]Lossy[/b] compression mode. This maps to Lossy WebP compression quality.",
+	"property_hint": PROPERTY_HINT_RANGE,
+	"hint_string": "0.0,1.0,0.05",
+}
+
+const COMPRESSION_NORMAL_MAP = {
+	"name": "compress/normal_map",
+	"default_value": false,
+	"description": "Ensure optimum quality if this image will be used as a normal map.",
+}
+
+# Debug
+const KEEP_JSON = {
+	"name": "debug/keep_json",
+	"default_value": false,
+	"description": "Keep data json file for inspection",
+}
+
+const KEEP_PNG = {
+	"name": "debug/keep_png",
+	"default_value": false,
+	"description": "Keep exported png file for inspection",
 }
 
 func _get_priority() -> float:
@@ -128,7 +166,7 @@ func _get_save_extension() -> String:
 	return "res"
 
 func _get_resource_type() -> String:
-	return "Texture2D"
+	return "PortableCompressedTexture2D"
 
 func _get_recognized_extensions() -> PackedStringArray:
 	return ["ase", "aseprite"]
@@ -144,6 +182,9 @@ func _get_preset_name(preset_index: int) -> String:
 			return "Unknown"
 
 func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
+
+	self.get_property_list()
+
 	match preset_index:
 		Presets.DEFAULT:
 			return [
@@ -152,8 +193,7 @@ func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 				SPLIT_LAYERS,
 				GENERATE_ATLAS_TEXTURES,
 				GENERATE_SPRITEFRAMES,
-				READ_FRAMERATE,
-				KEEP_JSON,
+				IGNORE_FRAMERATE,
 				SHEET_TYPE,
 				SHEET_WIDTH,
 				SHEET_HEIGHT,
@@ -164,6 +204,11 @@ func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 				INNER_PADDING,
 				TRIM,
 				EXTRUDE,
+				COMPRESSION_MODE,
+				COMPRESSION_LOSSY_QUALITY,
+				COMPRESSION_NORMAL_MAP,
+				KEEP_JSON,
+				KEEP_PNG,
 			]
 		_:
 			return []
@@ -187,6 +232,10 @@ func _get_option_visibility(_path: String, option_name: StringName, options: Dic
 	# this is because of a limitation in how slices are implemented in Aseprite
 	if option_name == "export_options/trim":
 		return not (options["generate_resources/atlas_textures"] or options["generate_resources/spriteframes"])
+
+	# only show lossy_quality for lossy compression modes
+	if option_name == "compress/lossy_quality":
+		return options["compress/mode"] == 1
 
 	return true
 
