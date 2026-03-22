@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://chnbxy23do0iy"]
+
+[ext_resource type="Texture2D" path="res://.godot/imported/player.ase-c01e0e86017cf506edc8169788aec93d.res" id="1_2x6k1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x6k1"]
+atlas = ExtResource("1_2x6k1")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xawk7"]
+atlas = ExtResource("1_2x6k1")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vd7x"]
+atlas = ExtResource("1_2x6k1")
+region = Rect2(128, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2x6k1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xawk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vd7x")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 10.0
+}]
