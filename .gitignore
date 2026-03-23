@@ -2,4 +2,4 @@
 .godot/
 .vscode/
 engine/
-linux_debug.pck
+game_debug.pck
