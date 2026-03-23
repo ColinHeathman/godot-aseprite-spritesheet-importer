@@ -43,7 +43,6 @@ Thanks to Kenney.nl for the original sprites used in these examples
 
 ### Export options
 
-# Export options
 - **Sheet Type** - Spritesheet type to export (default, horizontal, vertical, rows, columns, or packed)
 
 - **Sheet Width** - Sprite sheet width
@@ -65,6 +64,7 @@ Thanks to Kenney.nl for the original sprites used in these examples
 - **Extrude** - Extrude all images duplicating all edges one pixel
 
 ### Compress options
+
 - **Mode** - The compression mode to use,
 
 For 2D usage (compressed on disk, uncompressed on VRAM), the lossy and lossless modes are recommended. For 3D usage (compressed on VRAM) it depends on the target platform.
@@ -74,7 +74,8 @@ If you intend to only use desktop, S3TC or BPTC are recommended. For only mobile
 
 - **Normal Map** - Ensure optimum quality if this image will be used as a normal map.
 
-# Debug
+### Debug options
+
 - **Keep JSON** - Keep the JSON datafile instead of cleaning it up after export. Useful for debugging purposes.
 
 - **Keep PNG** - Keep exported png file for inspection
