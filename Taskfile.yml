@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  GODOT_VERSION: "4.6.1-stable"
+  GODOT_VERSION: "4.4.1-stable"
   GODOT_URL: "https://github.com/godotengine/godot-builds/releases/download/{{.GODOT_VERSION}}/Godot_v{{.GODOT_VERSION}}_linux.x86_64.zip"
   GODOT_ZIP: "Godot_v{{.GODOT_VERSION}}_linux.x86_64.zip"
   TEMPLATES_URL: "https://github.com/godotengine/godot-builds/releases/download/{{.GODOT_VERSION}}/Godot_v{{.GODOT_VERSION}}_export_templates.tpz"
@@ -42,7 +42,8 @@ tasks:
         fi
 
   run:
-    desck: Runs the project as a e2e test
+    desc: Runs the project as a e2e test
+    deps: [download]
     cmds:
       - engine/godot --import --export-pack Linux linux_debug.pck
       - engine/godot --main-pack linux_debug.pck

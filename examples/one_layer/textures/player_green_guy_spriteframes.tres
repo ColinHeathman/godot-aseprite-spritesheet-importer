@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://c73jfxuodpxce"]
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://c73jfxuodpxce"]
 
 [ext_resource type="Texture2D" path="res://.godot/imported/player.ase-c01e0e86017cf506edc8169788aec93d.res" id="1_c6elu"]
 

@@ -1,4 +1,4 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://de7r2sx7nxdpo"]
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://de7r2sx7nxdpo"]
 
 [ext_resource type="Texture2D" path="res://.godot/imported/player.ase-a26bbc23d2870b3a344dc609403c5901.res" id="1_tqsiy"]
 

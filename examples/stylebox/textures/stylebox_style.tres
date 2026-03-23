@@ -1,4 +1,4 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://ce3lkihf5njw4"]
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://ce3lkihf5njw4"]
 
 [ext_resource type="Texture2D" path="res://.godot/imported/stylebox.ase-7660cf289f0c73e580a69f2876ba0d58.res" id="1_nsdlq"]
 
