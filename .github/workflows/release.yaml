@@ -2,6 +2,9 @@ name: Build Release Zip
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   build:
     if: github.ref_type == 'tag'
@@ -19,3 +22,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: aseprite-spritesheet-importer.zip
+          generate_release_notes: true
