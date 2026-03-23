@@ -1,11 +1,10 @@
 name: Build Release Zip
 
-on:
-  release:
-    types: [created]
+on: push
 
 jobs:
   build:
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +15,7 @@ jobs:
         run: |
           git archive --format=zip --output=aseprite-spritesheet-importer.zip HEAD
 
-      - name: Upload to release
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: aseprite-spritesheet-importer.zip
