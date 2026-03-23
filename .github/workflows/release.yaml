@@ -1,0 +1,22 @@
+name: Build Release Zip
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create zip
+        run: |
+          git archive --format=zip --output=aseprite-spritesheet-importer.zip HEAD
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: aseprite-spritesheet-importer.zip
