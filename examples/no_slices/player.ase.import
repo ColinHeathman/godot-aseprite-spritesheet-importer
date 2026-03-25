@@ -7,8 +7,10 @@ path="res://.godot/imported/player.ase-649fcf8a2257b71cde62860b682ed741.res"
 
 [deps]
 
+files=["res://examples/no_slices/textures/player_0.tres", "res://examples/no_slices/textures/player_1.tres", "res://examples/no_slices/textures/player_2.tres", "res://examples/no_slices/textures/player_spriteframes.tres"]
+
 source_file="res://examples/no_slices/player.ase"
-dest_files=["res://.godot/imported/player.ase-649fcf8a2257b71cde62860b682ed741.res"]
+dest_files=["res://.godot/imported/player.ase-649fcf8a2257b71cde62860b682ed741.res", "res://examples/no_slices/textures/player_0.tres", "res://examples/no_slices/textures/player_1.tres", "res://examples/no_slices/textures/player_2.tres", "res://examples/no_slices/textures/player_spriteframes.tres"]
 
 [params]
 

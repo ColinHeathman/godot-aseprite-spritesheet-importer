@@ -3,12 +3,14 @@ class_name AsepriteUtilSpriteFrameTools
 extends AsepriteUtilAtlasTools
 
 var ignore_framerate: bool
+var localize_textures: bool
 
 var _frame_durations: Array
 var _named_spriteframes_atlas_names: Dictionary
 var _named_spriteframes: Dictionary
 
 func run() -> Error:
+	self.gen_files = []
 	_read_frames()
 	if self.spritesheet_data.meta.slices.size() > 0:
 		_read_slices()
@@ -24,6 +26,7 @@ func run() -> Error:
 			_flatten_frame_regions()
 
 	_make_load_atlas_textures()
+	_localize_atlas_textures()
 	_make_load_spriteframes()
 	_read_frame_durations()
 	_add_animations()
@@ -99,6 +102,11 @@ func _flatten_frame_regions() -> void:
 		self._named_spriteframes_atlas_names[spriteframes_name].append(atlas_texture_name)
 		self._named_atlas_regions[atlas_texture_name] = self._frame_regions[i]["default"]
 
+func _localize_atlas_textures() -> void:
+	if self.localize_textures:
+		for name: String in self._named_atlas_textures:
+			self._named_atlas_textures[name] = self._named_atlas_textures[name].duplicate(false)
+
 func _make_load_spriteframes() -> void:
 	self._named_spriteframes = {}
 	for spriteframes_name in self._named_spriteframes_atlas_names:
@@ -114,6 +122,7 @@ func _save_spriteframes() -> Error:
 	for spriteframes_name in self._named_spriteframes:
 		var sprite_frames_path: String = "%s/%s_spriteframes.tres" % [self.textures_folder, spriteframes_name]
 		var err = ResourceSaver.save(self._named_spriteframes[spriteframes_name], sprite_frames_path)
+		gen_files.append(self._named_spriteframes[spriteframes_name])
 		if err != OK:
 			print("SpriteFrames save error: %s" % error_string(err))
 			return err

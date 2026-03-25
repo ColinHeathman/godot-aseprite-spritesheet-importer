@@ -7,8 +7,10 @@ path="res://.godot/imported/player.ase-c01e0e86017cf506edc8169788aec93d.res"
 
 [deps]
 
+files=["res://examples/one_layer/textures/player_green_guy_spriteframes.tres", "res://examples/one_layer/textures/player_red_guy_spriteframes.tres"]
+
 source_file="res://examples/one_layer/player.ase"
-dest_files=["res://.godot/imported/player.ase-c01e0e86017cf506edc8169788aec93d.res"]
+dest_files=["res://.godot/imported/player.ase-c01e0e86017cf506edc8169788aec93d.res", "res://examples/one_layer/textures/player_green_guy_spriteframes.tres", "res://examples/one_layer/textures/player_red_guy_spriteframes.tres"]
 
 [params]
 

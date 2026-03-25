@@ -8,6 +8,7 @@ var textures_folder: String
 var texture: Texture2D
 var split_layers: bool
 var editor: EditorInterface
+var gen_files: Array[Resource]
 
 var _frame_regions: Array[Dictionary]
 var _slice_regions: Array[Dictionary]
@@ -33,6 +34,7 @@ func use_editor(editor: EditorInterface) -> void:
 	self.editor = editor
 
 func run() -> Error:
+	self.gen_files = []
 	var err: Error
 	_read_frames()
 	if self.spritesheet_data.meta.slices.size() > 0:
@@ -232,6 +234,7 @@ func _save_atlas_textures() -> Error:
 	for atlas_texture_name in self._named_atlas_textures:
 		var atlas_texture_path: String = "%s/%s.tres" % [self.textures_folder, atlas_texture_name]
 		var err = ResourceSaver.save(self._named_atlas_textures[atlas_texture_name], atlas_texture_path)
+		gen_files.append(self._named_atlas_textures[atlas_texture_name])
 		if err != OK:
 			print("AtlasTexture save error: %s" % error_string(err))
 			return err
@@ -272,6 +275,7 @@ func _save_atlas_styleboxes() -> Error:
 	for atlas_texture_name in self._named_atlas_styleboxes:
 		var stylebox_path: String = "%s/%s_stylebox.tres" % [self.textures_folder, atlas_texture_name]
 		var err = ResourceSaver.save(self._named_atlas_styleboxes[atlas_texture_name], stylebox_path)
+		gen_files.append(self._named_atlas_styleboxes[atlas_texture_name])
 		if err != OK:
 			print("StyleBoxTexture save error: %s" % error_string(err))
 			return err

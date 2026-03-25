@@ -1,37 +1,154 @@
-[gd_scene format=3 uid="uid://y6a73h1ow8xw"]
+[gd_scene load_steps=19 format=4 uid="uid://y6a73h1ow8xw"]
 
-[ext_resource type="SpriteFrames" uid="uid://bcwg031ta8bfv" path="res://examples/full/textures/player_green_guy_base_spriteframes.tres" id="1_hldr7"]
-[ext_resource type="SpriteFrames" uid="uid://dmoigcyhxfmvx" path="res://examples/full/textures/player_green_guy_hat_spriteframes.tres" id="2_xdggk"]
 [ext_resource type="StyleBox" uid="uid://5sk86w2qqxeb" path="res://examples/stylebox/textures/stylebox_style_stylebox.tres" id="3_hldr7"]
-[ext_resource type="SpriteFrames" uid="uid://bim1kwsi64jtn" path="res://examples/full/textures/player_red_guy_base_spriteframes.tres" id="3_mwmxg"]
-[ext_resource type="SpriteFrames" uid="uid://djmo1s3ewhci3" path="res://examples/full/textures/player_red_guy_hat_spriteframes.tres" id="4_fkvod"]
 
-[node name="TestScene" type="Node2D" unique_id=1977151244]
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_434x4"]
+_data = PackedByteArray("AAADAAUAAAABAAAAwAAAAAABAAA+BQAAUklGRjYFAABXRUJQVlA4TCoFAAAvv8A/ENfAIACAJHR3ww3+LwKdoDcYBABYZrYZ40qm0M9gBY0kNd/pVQXBC+5QigHmPwAA//9bW2gTffrBQ+eXhiUDKcKanXUIbmGsQVAQHKzz2r5LzFCINBbvcdQ+MaaMS0Is/LWF0EGWbdtRG1niBdwScIeS+Y8U9FqRm6+qRPQfkttGkiSrZ7sxa3IG/YbD/4oiHmI3WYLqJms43dy5FJYgB+kmbRoeoZtIhJvk8NwkV4pJDs5NWsUmh+peDHB0btIrNjgwN1mC717Qu0tB717guwt695Ot6xa87hX64o/91XUdWveryHWA3cU5wudetD3llWWFo3WXrnvKDIBurlQf/yZiVx+dm0zjJGzug+e5k9IBlttxaV4aG5m7WNPY0NxvM/wJ003F2QLC7YSP2+686tK/efM8rWy3W2Q/SiO3cvJw923cmnmVYpqlYtyzxG7jFk9+v89TtFv7mCf94P57U6nT2r1eA3e9z22pqon7k5kflpNPEZtSXbV4t+hMrEg3sU2CWTw5owe4k9C2aLc8gR/rvtSfBPNj1HO79TVws8S1cN+ls7fdfTKOYjbdhbVwp1YjdeNoHfncwhfPyHXvA+ZU53PAcl4P7nILcb3N7f+7FXY+X7Rdfcs5+3fJ28E9bsvMbiNdX966Km7PQxfO7fp+PFcjj1t/Wd2OXUVzZt20n527jN5y9XtzubWX0e08uwAUE//r+JfdH/V24jbiheRFvetXsKSkk3bgdry8C3jXap4q2oE7IG2i1D0yU2UQ7crtPIJKDeMaqaKH9uT2nkC9reFcxzH27HZS47lmzg7cf+hEPMRusgTVTdZwurlzKSxBDtJN2jQ8QjeRCDfJ4blJrhSTHJybtIpNDtW9GODo3KRXbHBgbrIE372gd5eC3r3Adxf07idb1y143Sv0xR/7q+s6tO5XkesAu4tzhM+9aHvKK8sKR+suXfeUGQDdXKk+/k3Erj46N5nGSdjcB89zJ6UDLLfj0rw0NjJ3saaxobnfZvgTppuKswWE2wkftx151aV/84ahX9lut8g+lUZu5eTh7tu4NfAqRT9IxbgHid3GLZ78eBz6aLf2MfT6wf33plKntWO9Bu56H9tSVRP3BzOfLCfvI9anumrxbtGZWJFuYusFs3hyRg9wJ6Ft0W55Aj/Wfak/CebTqOd262vgZolr4T5KZ2+7Y28cxaw/CmvhTq1G6sbROvK5hS+ekeveB8ypzueA5bwe3OUW4nqb2/93K+x8vmi7+pZz9u+St4N73JaZ3Ua6vrx1Vdyehy6c2/X9eK5GHrf+srodu4rmzLppPzt3Gb3l6vfmcmsvo9t5dgEoJv7X8S+7P+rtxG3EC8mLetevYElJJ+3A7Xh5F/Cu1TxVtAN3QNpEqXtkpsog2pXbeQSVGsY1UkUP7cntPYF6W8O5jmPs2e2kxnPNnB24/6mP1KC6yR5Gt+ycqkQ4QDfzqkl+dG4J7ZBjc9dqdG4/2xs2d6UG6G7J/kopQXenBMLdkI3enX4NdxUmt5f9rYwIqnvWmyo5QPfsCp57DgiTWyKjdtMcGOF139cejwcJHSC5hUszTZPj7QVj/3z3HttOA78///fX9EgNqpvsYXTLzr5KhAN0M6+a5EfnltAOOTZ3rUbn9rO9YXNXaoDuluyvlBJ0d0og3A3Z6N3p13BXYXJ72d/KiKC6B72+kgN0D67guYeAMLklMmo3DYERXvdx7XQ6kdABklu4NH3fO95eMPbPd++x7TTw+/N//2feAQ==")
+size_override = Vector2(192, 256)
 
-[node name="GreenGuy" type="AnimatedSprite2D" parent="." unique_id=593271239]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqljj"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0otj"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1c2t"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p854p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqljj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0otj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1c2t")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hm8q"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3kdf"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjlwq"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_37ynw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hm8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3kdf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjlwq")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu2q2"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2netj"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynip6"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_soiho"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu2q2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2netj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynip6")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo2b1"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gstht"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tade"]
+atlas = SubResource("PortableCompressedTexture2D_434x4")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_etaac"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fo2b1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gstht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8tade")
+}],
+"loop": true,
+"name": &"walk-loop",
+"speed": 4.0
+}]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="GreenGuy" type="AnimatedSprite2D" parent="."]
 position = Vector2(32, 32)
-sprite_frames = ExtResource("1_hldr7")
+sprite_frames = SubResource("SpriteFrames_p854p")
+animation = &"walk-loop"
+autoplay = "walk-loop"
+frame_progress = 0.651044
+
+[node name="GreenGuyHat" type="AnimatedSprite2D" parent="GreenGuy"]
+sprite_frames = SubResource("SpriteFrames_37ynw")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
-[node name="GreenGuyHat" type="AnimatedSprite2D" parent="GreenGuy" unique_id=1399600521]
-sprite_frames = ExtResource("2_xdggk")
-animation = &"walk-loop"
-autoplay = "walk-loop"
-
-[node name="RedGuy" type="AnimatedSprite2D" parent="." unique_id=1375067308]
+[node name="RedGuy" type="AnimatedSprite2D" parent="."]
 position = Vector2(99, 32)
-sprite_frames = ExtResource("3_mwmxg")
+sprite_frames = SubResource("SpriteFrames_soiho")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
-[node name="RedGuyHat" type="AnimatedSprite2D" parent="RedGuy" unique_id=1697748137]
+[node name="RedGuyHat" type="AnimatedSprite2D" parent="RedGuy"]
 visible = false
-sprite_frames = ExtResource("4_fkvod")
+sprite_frames = SubResource("SpriteFrames_etaac")
 animation = &"walk-loop"
 autoplay = "walk-loop"
 
-[node name="Panel" type="Panel" parent="." unique_id=1069724399]
+[node name="Panel" type="Panel" parent="."]
 offset_left = 147.0
 offset_top = 9.0
 offset_right = 182.0
