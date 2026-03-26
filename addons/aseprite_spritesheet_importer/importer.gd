@@ -15,8 +15,10 @@ var import_options: Dictionary
 var aseprite_options: AsepriteExecutable.Options
 var executable: AsepriteExecutable
 var import_plugin: EditorImportPlugin
-var spritesheet_texture: Texture2D
+var spritesheet_texture: PortableCompressedTexture2D
 var spritesheet_data: Dictionary
+var gen_files: Array[Resource]
+var do_scan: bool
 
 @warning_ignore("shadowed_variable")
 func use_editor(editor: EditorInterface) -> void:
@@ -65,12 +67,14 @@ func use_import_plugin(import_plugin: EditorImportPlugin) -> void:
 	self.import_plugin = import_plugin
 
 func run() -> Error:
+	self.gen_files = []
 	var steps = [
 		self._validate,
 		self._make_fallback_texture,
 		self._export_spritesheet,
 		self._generate_atlas_textures,
 		self._generate_spriteframes,
+		self._prune_files,
 	]
 	for step in steps:
 		var err = step.call()
@@ -117,10 +121,15 @@ func _make_fallback_texture() -> Error:
 	return OK
 
 func _export_spritesheet() -> Error:
+	var editor_file_system = self.editor.get_resource_filesystem()
+	
 	# Make textures folder if required
-	if self.import_options["generate_resources/atlas_textures"] \
-	or self.import_options["generate_resources/spriteframes"]:
+	if (self.import_options["generate_resources/atlas_textures"] \
+	or self.import_options["generate_resources/spriteframes"]) \
+	and ! DirAccess.dir_exists_absolute(self.textures_folder):
 		DirAccess.make_dir_recursive_absolute(self.textures_folder)
+		# Notify import_plugin to run a scan
+		self.do_scan = true
 
 	# Execute Aseprite
 	var aseprite_result = self.executable.export_spritesheet(self.source_file, self.aseprite_options)
@@ -128,7 +137,6 @@ func _export_spritesheet() -> Error:
 		return aseprite_result[0]
 	self.spritesheet_data = aseprite_result[1]
 
-	var editor_file_system = self.editor.get_resource_filesystem()
 
 	# Delete JSON if necessary
 	if not self.import_options["debug/keep_json"]:
@@ -169,7 +177,9 @@ func _generate_atlas_textures() -> Error:
 	atlas_tools.use_texture(self.spritesheet_texture)
 	atlas_tools.use_editor(self.editor)
 	atlas_tools.split_layers = self.import_options["layers/split_layers"]
-	return atlas_tools.run()
+	var err = atlas_tools.run()
+	self.gen_files.append_array(atlas_tools.gen_files)
+	return err
 
 func _generate_spriteframes() -> Error:
 	if not self.import_options["generate_resources/spriteframes"]:
@@ -181,4 +191,48 @@ func _generate_spriteframes() -> Error:
 	spriteframe_tools.use_editor(self.editor)
 	spriteframe_tools.split_layers = self.import_options["layers/split_layers"]
 	spriteframe_tools.ignore_framerate = self.import_options["generate_resources/ignore_framerate"]
-	return spriteframe_tools.run()
+	spriteframe_tools.localize_textures = ! self.import_options["generate_resources/atlas_textures"]
+	var err = spriteframe_tools.run()
+	self.gen_files.append_array(spriteframe_tools.gen_files)
+	return err
+
+func _prune_files() -> Error:
+	
+	var prev_files: Dictionary = {}
+	var import_path = "%s.import" % self.source_file
+	var import_file = FileAccess.open(import_path, FileAccess.READ)
+	if import_file == null:
+		return FileAccess.get_open_error()
+
+	while import_file.get_position() < import_file.get_length():
+		# Find line that starts with files=
+		var line: String = import_file.get_line()
+		if line.begins_with("files="):
+			# Read previous files into a set
+			for f in JSON.parse_string(line.trim_prefix("files=")):
+				prev_files[f] = true
+	import_file.close()
+	
+	for r in self.gen_files:
+		# Remove the file from the set of previous files
+		prev_files.erase(r.resource_path)
+	
+	# Prune any previously generated files that weren't generated this time
+	var editor_file_system = editor.get_resource_filesystem()
+	for f in prev_files:
+		if FileAccess.file_exists(f):
+			var err = DirAccess.remove_absolute(f)
+			if err != OK:
+				return err
+			editor_file_system.update_file(f)
+	
+	# Delete the folder if it's empty
+	if DirAccess.dir_exists_absolute(self.textures_folder) \
+	and DirAccess.get_files_at(self.textures_folder).size() == 0:
+		var err = DirAccess.remove_absolute(self.textures_folder)
+		if err != OK:
+			return err
+		# Notify import_plugin to run a scan
+		self.do_scan = true
+
+	return OK

@@ -7,8 +7,10 @@ path="res://.godot/imported/stylebox.ase-7660cf289f0c73e580a69f2876ba0d58.res"
 
 [deps]
 
+files=["res://examples/stylebox/textures/stylebox_style.tres", "res://examples/stylebox/textures/stylebox_style_stylebox.tres"]
+
 source_file="res://examples/stylebox/stylebox.ase"
-dest_files=["res://.godot/imported/stylebox.ase-7660cf289f0c73e580a69f2876ba0d58.res"]
+dest_files=["res://.godot/imported/stylebox.ase-7660cf289f0c73e580a69f2876ba0d58.res", "res://examples/stylebox/textures/stylebox_style.tres", "res://examples/stylebox/textures/stylebox_style_stylebox.tres"]
 
 [params]
 

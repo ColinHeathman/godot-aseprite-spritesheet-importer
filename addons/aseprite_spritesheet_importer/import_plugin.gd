@@ -249,4 +249,13 @@ func _import(source_file: String, save_path: String, options: Dictionary, _platf
 	importer.use_import_options(options)
 	importer.use_executable(self.executable)
 	importer.use_import_plugin(self)
-	return importer.run()
+	err = importer.run()
+	for f: Resource in importer.gen_files:
+		_gen_files.append(f.resource_path)
+	
+	if importer.do_scan:
+		# EditorFileSystem.scan seems to be the only way to get the FileSystemDock to notice the
+		# textures folder is created or deleted. This often throws an error so it should be avoided
+		EditorInterface.get_resource_filesystem().scan()
+	
+	return err
