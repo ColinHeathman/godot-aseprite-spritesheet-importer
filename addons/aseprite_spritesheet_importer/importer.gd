@@ -1,6 +1,9 @@
 @tool
-class_name AsepriteImporter
 extends RefCounted
+
+const AsepriteExecutable = preload("res://addons/aseprite_spritesheet_importer/executable.gd")
+const AsepriteUtilAtlasTools = preload("res://addons/aseprite_spritesheet_importer/util/atlas_tools.gd")
+const AsepriteUtilSpriteFrameTools = preload("res://addons/aseprite_spritesheet_importer/util/spriteframe_tools.gd")
 
 var editor: EditorInterface
 var source_file: String
@@ -37,7 +40,7 @@ func use_source_file(source_file: String, save_path: String, save_extension: Str
 @warning_ignore("shadowed_variable")
 func use_import_options(import_options: Dictionary) -> void:
 	self.import_options = import_options
-	var opts = AsepriteExecutable.Options.new()
+	var opts: AsepriteExecutable.Options = AsepriteExecutable.Options.new()
 	opts.all_layers = import_options["layers/export_hidden_layers"]
 	opts.split_layers = import_options["layers/split_layers"]
 	opts.flatten_layer_groups = import_options["layers/flatten_layer_groups"]
@@ -68,7 +71,7 @@ func use_import_plugin(import_plugin: EditorImportPlugin) -> void:
 
 func run() -> Error:
 	self.gen_files = []
-	var steps = [
+	var steps: Array[Callable] = [
 		self._validate,
 		self._make_fallback_texture,
 		self._export_spritesheet,
@@ -77,13 +80,13 @@ func run() -> Error:
 		self._prune_files,
 	]
 	for step in steps:
-		var err = step.call()
+		var err: Error = step.call()
 		if err != OK:
 			return err
 	return OK
 
 func _validate() -> Error:
-	var fail = false
+	var fail: bool = false
 	if self.editor == null:
 		fail = true
 		print("call use_editor() before run()")
@@ -108,20 +111,22 @@ func _make_fallback_texture() -> Error:
 	self.texture_path = "%s.%s" % [self.save_path, self.save_extension]
 
 	# Setup ImageTexture
-	var img = Image.create(1,1,false, Image.FORMAT_RGBA8)
+	var img: Image = Image.create(1,1,false, Image.FORMAT_RGBA8)
 	img.set_pixel(0,0, Color.FUCHSIA)
 	self.spritesheet_texture = PortableCompressedTexture2D.new()
-	self.spritesheet_texture.create_from_image(img, 0)
+	self.spritesheet_texture.create_from_image(
+		img,
+		PortableCompressedTexture2D.COMPRESSION_MODE_LOSSLESS,
+	)
 	
 	# Save to texture_path
-	var err = ResourceSaver.save(self.spritesheet_texture, self.texture_path)
+	var err: Error = ResourceSaver.save(self.spritesheet_texture, self.texture_path)
 	if err != OK:
 		return err
 	self.spritesheet_texture.take_over_path(self.texture_path)
 	return OK
 
 func _export_spritesheet() -> Error:
-	var editor_file_system = self.editor.get_resource_filesystem()
 	
 	# Make textures folder if required
 	if (self.import_options["generate_resources/atlas_textures"] \
@@ -132,7 +137,7 @@ func _export_spritesheet() -> Error:
 		self.do_scan = true
 
 	# Execute Aseprite
-	var aseprite_result = self.executable.export_spritesheet(self.source_file, self.aseprite_options)
+	var aseprite_result: Array = self.executable.export_spritesheet(self.source_file, self.aseprite_options)
 	if aseprite_result[0] != OK:
 		return aseprite_result[0]
 	self.spritesheet_data = aseprite_result[1]
@@ -143,7 +148,7 @@ func _export_spritesheet() -> Error:
 		DirAccess.remove_absolute(self.aseprite_options.datafile_path)
 
 	# Load PNG file
-	var img = Image.load_from_file(self.aseprite_options.spritesheet_path)
+	var img: Image = Image.load_from_file(self.aseprite_options.spritesheet_path)
 	self.spritesheet_texture = PortableCompressedTexture2D.new()
 
 	# Compress image
@@ -155,7 +160,7 @@ func _export_spritesheet() -> Error:
 	)
 
 	# Save to texture_path
-	var err = ResourceSaver.save(self.spritesheet_texture, self.texture_path)
+	var err: Error = ResourceSaver.save(self.spritesheet_texture, self.texture_path)
 	if err != OK:
 		return err
 	self.spritesheet_texture.take_over_path(self.texture_path)
@@ -165,19 +170,19 @@ func _export_spritesheet() -> Error:
 		DirAccess.remove_absolute(self.aseprite_options.spritesheet_path)
 
 	# Refresh Editor
-	editor_file_system.update_file(self.texture_path)
+	EditorInterface.get_resource_filesystem().update_file(self.texture_path)
 	return OK
 
 func _generate_atlas_textures() -> Error:
 	if not self.import_options["generate_resources/atlas_textures"]:
 		return OK
 
-	var atlas_tools = AsepriteUtilAtlasTools.new()
+	var atlas_tools: AsepriteUtilAtlasTools = AsepriteUtilAtlasTools.new()
 	atlas_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
 	atlas_tools.use_texture(self.spritesheet_texture)
 	atlas_tools.use_editor(self.editor)
 	atlas_tools.split_layers = self.import_options["layers/split_layers"]
-	var err = atlas_tools.run()
+	var err: Error = atlas_tools.run()
 	self.gen_files.append_array(atlas_tools.gen_files)
 	return err
 
@@ -185,22 +190,22 @@ func _generate_spriteframes() -> Error:
 	if not self.import_options["generate_resources/spriteframes"]:
 		return OK
 
-	var spriteframe_tools = AsepriteUtilSpriteFrameTools.new()
+	var spriteframe_tools: AsepriteUtilSpriteFrameTools = AsepriteUtilSpriteFrameTools.new()
 	spriteframe_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
 	spriteframe_tools.use_texture(self.spritesheet_texture)
 	spriteframe_tools.use_editor(self.editor)
 	spriteframe_tools.split_layers = self.import_options["layers/split_layers"]
 	spriteframe_tools.ignore_framerate = self.import_options["generate_resources/ignore_framerate"]
 	spriteframe_tools.localize_textures = ! self.import_options["generate_resources/atlas_textures"]
-	var err = spriteframe_tools.run()
+	var err: Error = spriteframe_tools.run()
 	self.gen_files.append_array(spriteframe_tools.gen_files)
 	return err
 
 func _prune_files() -> Error:
 	
 	var prev_files: Dictionary = {}
-	var import_path = "%s.import" % self.source_file
-	var import_file = FileAccess.open(import_path, FileAccess.READ)
+	var import_path: String = "%s.import" % self.source_file
+	var import_file: FileAccess = FileAccess.open(import_path, FileAccess.READ)
 	if import_file == null:
 		return FileAccess.get_open_error()
 
@@ -209,7 +214,7 @@ func _prune_files() -> Error:
 		var line: String = import_file.get_line()
 		if line.begins_with("files="):
 			# Read previous files into a set
-			for f in JSON.parse_string(line.trim_prefix("files=")):
+			for f: Variant in JSON.parse_string(line.trim_prefix("files=")):
 				prev_files[f] = true
 	import_file.close()
 	
@@ -218,18 +223,17 @@ func _prune_files() -> Error:
 		prev_files.erase(r.resource_path)
 	
 	# Prune any previously generated files that weren't generated this time
-	var editor_file_system = editor.get_resource_filesystem()
-	for f in prev_files:
+	for f: String in prev_files:
 		if FileAccess.file_exists(f):
-			var err = DirAccess.remove_absolute(f)
+			var err: Error = DirAccess.remove_absolute(f)
 			if err != OK:
 				return err
-			editor_file_system.update_file(f)
+			EditorInterface.get_resource_filesystem().update_file(f)
 	
 	# Delete the folder if it's empty
 	if DirAccess.dir_exists_absolute(self.textures_folder) \
 	and DirAccess.get_files_at(self.textures_folder).size() == 0:
-		var err = DirAccess.remove_absolute(self.textures_folder)
+		var err: Error = DirAccess.remove_absolute(self.textures_folder)
 		if err != OK:
 			return err
 		# Notify import_plugin to run a scan

@@ -19,6 +19,15 @@ run/main_scene="res://examples/test_scene.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/exclude_addons=false
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inference_on_variant=1
+gdscript/warnings/native_method_override=1
+gdscript/warnings/get_node_default_without_onready=1
+gdscript/warnings/onready_with_export=1
+
 [display]
 
 window/size/viewport_width=200

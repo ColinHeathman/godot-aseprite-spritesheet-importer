@@ -1,16 +1,19 @@
 @tool
-class_name AsepritePlugin
 extends EditorPlugin
+
+const AsepriteImportPlugin = preload("res://addons/aseprite_spritesheet_importer/import_plugin.gd")
+const AsepritePluginConfig = preload("res://addons/aseprite_spritesheet_importer/plugin_config.gd")
+const AsepriteExecutable = preload("res://addons/aseprite_spritesheet_importer/executable.gd")
 
 var importer: AsepriteImportPlugin
 var config: AsepritePluginConfig
 var executable: AsepriteExecutable
 
-func _enter_tree():
+func _enter_tree() -> void:
 
 	# Configuration
 	config = AsepritePluginConfig.new()
-	config.editor_settings = self.get_editor_interface().get_editor_settings()
+	config.editor_settings = EditorInterface.get_editor_settings()
 	config.setup_editor_settings()
 
 	# Executable
@@ -24,5 +27,5 @@ func _enter_tree():
 	add_import_plugin(importer)
 	
 
-func _exit_tree():
+func _exit_tree() -> void:
 	remove_import_plugin(importer)
