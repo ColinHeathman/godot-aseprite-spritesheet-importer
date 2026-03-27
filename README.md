@@ -3,16 +3,6 @@
 
 A simple yet powerful Godot plugin designed to streamline importing spritesheets and animations from Aseprite. Treat your ASE files like source code!
 
-<img align="center" src="./screenshots/aseprite.gif" />
-
-<img align="center" src="./screenshots/atlas_textures.gif" />
-
-<img align="center" src="./screenshots/spriteframes.gif" />
-
-<img align="center" src="./screenshots/stylebox.gif" />
-
-Thanks to Kenney.nl for the original sprites used in these examples
-
 ## Key Features
 
 - **Update on save**: Saving the changes to an Aseprite file will automatically update textures in Godot.
@@ -22,6 +12,30 @@ Thanks to Kenney.nl for the original sprites used in these examples
 - **Support for nine-patch StyleBox**: Useful for creating GUI elements.
 
 - **Resource focus**: This plugin focuses on creating Resources (ie. SpriteFrames, AtlasTexture, Stylebox) rather than Nodes or Scenes (eg. AnimatedSprite2D, AnimatedSprite3D, or AnimationTree).
+
+## Demo
+
+#### An aseprite file with multiple layers, layer groups, and an animation
+<p align="center">
+  <img src="./screenshots/aseprite.webp" alt="A red guy and green guy in Aseprite" />
+</p>
+
+#### Exporting SpriteFrames
+<p align="center">
+  <img src="./screenshots/spriteframes.webp" alt="Exporting SpriteFrames from an ase file within the Godot Editor" />
+</p>
+
+#### Exporting AtlasTexture
+<p align="center">
+  <img src="./screenshots/atlas_textures.webp" alt="Exporting AtlasTextures from an ase file within the Godot Editor" />
+</p>
+
+#### Exporting Stylebox
+<p align="center">
+  <img src="./screenshots/stylebox.webp" alt="Exporting StyleBox from an ase file within the Godot Editor" />
+</p>
+
+Thanks to Kenney.nl for the original sprites used in these examples
 
 ## Import Options
 
