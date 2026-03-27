@@ -7,15 +7,17 @@ path="res://.godot/imported/player.ase-9bbca09d7864f2ad0d2fe64ed68af0a2.res"
 
 [deps]
 
+files=["res://examples/one_frame/textures/player_green_guy.tres", "res://examples/one_frame/textures/player_red_guy.tres"]
+
 source_file="res://examples/one_frame/player.ase"
-dest_files=["res://.godot/imported/player.ase-9bbca09d7864f2ad0d2fe64ed68af0a2.res"]
+dest_files=["res://.godot/imported/player.ase-9bbca09d7864f2ad0d2fe64ed68af0a2.res", "res://examples/one_frame/textures/player_green_guy.tres", "res://examples/one_frame/textures/player_red_guy.tres"]
 
 [params]
 
 layers/export_hidden_layers=false
 layers/flatten_layer_groups=false
 layers/split_layers=false
-generate_resources/atlas_textures=false
+generate_resources/atlas_textures=true
 generate_resources/spriteframes=false
 generate_resources/ignore_framerate=false
 export_options/sheet_type=0
