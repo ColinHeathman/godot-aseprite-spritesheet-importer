@@ -1,6 +1,8 @@
 @tool
-class_name AsepriteImportPlugin
 extends EditorImportPlugin
+
+const AsepriteExecutable = preload("res://addons/aseprite_spritesheet_importer/executable.gd")
+const AsepriteImporter = preload("res://addons/aseprite_spritesheet_importer/importer.gd")
 
 var executable: AsepriteExecutable
 var editor: EditorInterface
@@ -213,7 +215,7 @@ func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 		_:
 			return []
 
-func _get_option_visibility(_path: String, option_name: StringName, options: Dictionary):
+func _get_option_visibility(_path: String, option_name: StringName, options: Dictionary) -> bool:
 	# only show "sheet_width" and "sheet_height" if sheet_type = "horizontal", "vertical" or "packed"
 	if option_name == "export_options/sheet_width" or option_name == "export_options/sheet_height":
 		return (
@@ -240,10 +242,10 @@ func _get_option_visibility(_path: String, option_name: StringName, options: Dic
 	return true
 
 func _import(source_file: String, save_path: String, options: Dictionary, _platform_variants: Array[String], _gen_files: Array[String]) -> Error:
-	var err = self.executable.validate()
+	var err: Error = self.executable.validate()
 	if err != OK:
 		return err
-	var importer = AsepriteImporter.new()
+	var importer: AsepriteImporter = AsepriteImporter.new()
 	importer.use_editor(self.editor)
 	importer.use_source_file(source_file, save_path, _get_save_extension())
 	importer.use_import_options(options)

@@ -1,5 +1,4 @@
 @tool
-class_name AsepriteUtilAtlasTools
 extends RefCounted
 
 var spritesheet_name: String
@@ -64,9 +63,9 @@ func run() -> Error:
 
 func _read_frames() -> void:
 	self._frame_regions = []
-	var frame_number = 0
+	var frame_number: int = 0
 	if not split_layers:
-		for key in self.spritesheet_data.frames:
+		for key: String in self.spritesheet_data.frames:
 			# key looks like "filename 0.ase" normally
 			# key looks like "filename.ase" if there's only 1 frame
 			if self._frame_regions.size() == frame_number:
@@ -79,11 +78,11 @@ func _read_frames() -> void:
 			)
 			frame_number += 1
 	else:
-		var prev_layer_name = ""
-		for key in self.spritesheet_data.frames:
+		var prev_layer_name: String = ""
+		for key: String in self.spritesheet_data.frames:
 			# key looks like "filename (layer) 0.ase" for split-layers
 			# key looks like "filename (layer).ase" for split-layers  if there's only 1 frame
-			var layer_name = key.rsplit(")", true, 1)[0].rsplit("(", true, 1)[1]
+			var layer_name: String = key.rsplit(")", true, 1)[0].rsplit("(", true, 1)[1]
 			if layer_name != prev_layer_name:
 				frame_number = 0
 			if self._frame_regions.size() == frame_number:
@@ -100,13 +99,13 @@ func _read_frames() -> void:
 func _read_slices() -> void:
 	self._slices = {}
 	self._slice_styleboxes = {}
-	for slice in self.spritesheet_data.meta.slices:
+	for slice: Variant in self.spritesheet_data.meta.slices:
 		if slice.name.ends_with("-noimp"):
 			# Do not import
 			continue
 
 		self._slices[slice.name] = {}
-		for key in slice.keys:
+		for key: Variant in slice.keys:
 			self._slices[slice.name][key.frame] = Rect2i(
 				key.bounds.x,
 				key.bounds.y,
@@ -125,10 +124,10 @@ func _read_slices() -> void:
 			slice.keys[0].bounds.h - slice.keys[0].center.y - slice.keys[0].center.h,
 		)
 
-func _get_slice_bounds(slice_name, frame_number) -> Rect2i:
-	var all_slice_bounds = self._slices[slice_name]
+func _get_slice_bounds(slice_name: String, frame_number: int) -> Rect2i:
+	var all_slice_bounds: Dictionary = self._slices[slice_name]
 	var result: Rect2i
-	for slice_frame_number in all_slice_bounds:
+	for slice_frame_number: float in all_slice_bounds:
 		if slice_frame_number > frame_number:
 			break
 		result = all_slice_bounds[slice_frame_number]
@@ -140,9 +139,9 @@ func _read_slice_regions() -> void:
 
 	for i in range(self._frame_regions.size()):
 		self._slice_regions[i] = {}
-		for layer_name in self._frame_regions[i]:
+		for layer_name: String in self._frame_regions[i]:
 			self._slice_regions[i][layer_name] = {}
-			for slice_name in self._slices:
+			for slice_name: String in self._slices:
 				var slice_bounds: Rect2i = self._get_slice_bounds(slice_name, i)
 				var frame_bounds: Rect2i = self._frame_regions[i][layer_name]
 				self._slice_regions[i][layer_name][slice_name] = Rect2i(
@@ -157,17 +156,17 @@ func _flatten_slice_regions_split() -> void:
 	if self._frame_regions.size() > 1:
 		# For N frames
 		for i in range(self._frame_regions.size()):
-			for layer_name in self._frame_regions[i]:
-				for slice_name in self._slices:
-					var atlas_texture_name = "%s_%s_%s_%d" % [self.spritesheet_name, slice_name, layer_name, i]
+			for layer_name: String in self._frame_regions[i]:
+				for slice_name: String in self._slices:
+					var atlas_texture_name: String = "%s_%s_%s_%d" % [self.spritesheet_name, slice_name, layer_name, i]
 					self._named_atlas_regions[atlas_texture_name] = self._slice_regions[i][layer_name][slice_name]
 					if slice_name in self._slice_styleboxes:
 						self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
 	else:
 		# For 1 frame
-		for layer_name in self._frame_regions[0]:
-			for slice_name in self._slices:
-				var atlas_texture_name = "%s_%s_%s" % [self.spritesheet_name, slice_name, layer_name]
+		for layer_name: String in self._frame_regions[0]:
+			for slice_name: String in self._slices:
+				var atlas_texture_name: String = "%s_%s_%s" % [self.spritesheet_name, slice_name, layer_name]
 				self._named_atlas_regions[atlas_texture_name] = self._slice_regions[0][layer_name][slice_name]
 				if slice_name in self._slice_styleboxes:
 					self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
@@ -177,15 +176,15 @@ func _flatten_slice_regions() -> void:
 	if self._frame_regions.size() > 1:
 		# For N frames
 		for i in range(self._frame_regions.size()):
-			for slice_name in self._slices:
-				var atlas_texture_name = "%s_%s_%d" % [self.spritesheet_name, slice_name, i]
+			for slice_name: String in self._slices:
+				var atlas_texture_name: String = "%s_%s_%d" % [self.spritesheet_name, slice_name, i]
 				self._named_atlas_regions[atlas_texture_name] = self._slice_regions[i]["default"][slice_name]
 				if slice_name in self._slice_styleboxes:
 					self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
 	else:
 		# For 1 frame
-		for slice_name in self._slices:
-			var atlas_texture_name = "%s_%s" % [self.spritesheet_name, slice_name]
+		for slice_name: String in self._slices:
+			var atlas_texture_name: String = "%s_%s" % [self.spritesheet_name, slice_name]
 			self._named_atlas_regions[atlas_texture_name] = self._slice_regions[0]["default"][slice_name]
 			if slice_name in self._slice_styleboxes:
 				self._named_stylebox_regions[atlas_texture_name] = self._slice_styleboxes[slice_name]
@@ -195,13 +194,13 @@ func _flatten_frame_regions_split() -> void:
 	if self._frame_regions.size() > 1:
 		# For N frames
 		for i in range(self._frame_regions.size()):
-			for layer_name in self._frame_regions[i]:
-				var atlas_texture_name = "%s_%s_%d" % [self.spritesheet_name, layer_name, i]
+			for layer_name: String in self._frame_regions[i]:
+				var atlas_texture_name: String = "%s_%s_%d" % [self.spritesheet_name, layer_name, i]
 				self._named_atlas_regions[atlas_texture_name] = self._frame_regions[i][layer_name]
 	else:
 		# For 1 frame
-		for layer_name in self._frame_regions[0]:
-			var atlas_texture_name = "%s_%s" % [self.spritesheet_name, layer_name]
+		for layer_name: String in self._frame_regions[0]:
+			var atlas_texture_name: String = "%s_%s" % [self.spritesheet_name, layer_name]
 			self._named_atlas_regions[atlas_texture_name] = self._frame_regions[0][layer_name]
 
 func _flatten_frame_regions() -> void:
@@ -209,16 +208,16 @@ func _flatten_frame_regions() -> void:
 	if self._frame_regions.size() > 1:
 		# For N frames
 		for i in range(self._frame_regions.size()):
-			var atlas_texture_name = "%s_%d" % [self.spritesheet_name, i]
+			var atlas_texture_name: String = "%s_%d" % [self.spritesheet_name, i]
 			self._named_atlas_regions[atlas_texture_name] = self._frame_regions[i]["default"]
 	else:
 		# For 1 frame
-		var atlas_texture_name = self.spritesheet_name
+		var atlas_texture_name: String = self.spritesheet_name
 		self._named_atlas_regions[atlas_texture_name] = self._frame_regions[0]["default"]
 
 func _make_load_atlas_textures() -> void:
 	self._named_atlas_textures = {}
-	for atlas_texture_name in self._named_atlas_regions:
+	for atlas_texture_name: String in self._named_atlas_regions:
 		var atlas_texture_path: String = "%s/%s.tres" % [self.textures_folder, atlas_texture_name]
 		var atex: AtlasTexture
 		if FileAccess.file_exists(atlas_texture_path):
@@ -231,22 +230,22 @@ func _make_load_atlas_textures() -> void:
 		self._named_atlas_textures[atlas_texture_name] = atex
 
 func _save_atlas_textures() -> Error:
-	for atlas_texture_name in self._named_atlas_textures:
+	for atlas_texture_name: String in self._named_atlas_textures:
 		var atlas_texture_path: String = "%s/%s.tres" % [self.textures_folder, atlas_texture_name]
-		var err = ResourceSaver.save(self._named_atlas_textures[atlas_texture_name], atlas_texture_path)
+		var err: Error = ResourceSaver.save(self._named_atlas_textures[atlas_texture_name], atlas_texture_path)
 		gen_files.append(self._named_atlas_textures[atlas_texture_name])
 		if err != OK:
 			print("AtlasTexture save error: %s" % error_string(err))
 			return err
 
-		self.editor.get_resource_filesystem().update_file(atlas_texture_path)
+		EditorInterface.get_resource_filesystem().update_file(atlas_texture_path)
 		self._named_atlas_textures[atlas_texture_name].take_over_path(atlas_texture_path)
 
 	return OK
 
 func _make_load_styleboxes() -> void:
 	self._named_atlas_styleboxes = {}
-	for atlas_texture_name in self._named_atlas_textures:
+	for atlas_texture_name: String in self._named_atlas_textures:
 
 		# Does stylebox exist?
 		if atlas_texture_name not in self._named_stylebox_regions:
@@ -262,7 +261,7 @@ func _make_load_styleboxes() -> void:
 		stylebox.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
 		stylebox.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
 
-		var stylebox_region = self._named_stylebox_regions[atlas_texture_name]
+		var stylebox_region: Rect2i = self._named_stylebox_regions[atlas_texture_name]
 
 		stylebox.texture_margin_left = stylebox_region.position.x
 		stylebox.texture_margin_top = stylebox_region.position.y
@@ -272,15 +271,15 @@ func _make_load_styleboxes() -> void:
 		self._named_atlas_styleboxes[atlas_texture_name] = stylebox
 
 func _save_atlas_styleboxes() -> Error:
-	for atlas_texture_name in self._named_atlas_styleboxes:
+	for atlas_texture_name: String in self._named_atlas_styleboxes:
 		var stylebox_path: String = "%s/%s_stylebox.tres" % [self.textures_folder, atlas_texture_name]
-		var err = ResourceSaver.save(self._named_atlas_styleboxes[atlas_texture_name], stylebox_path)
+		var err: Error = ResourceSaver.save(self._named_atlas_styleboxes[atlas_texture_name], stylebox_path)
 		gen_files.append(self._named_atlas_styleboxes[atlas_texture_name])
 		if err != OK:
 			print("StyleBoxTexture save error: %s" % error_string(err))
 			return err
 
-		self.editor.get_resource_filesystem().update_file(stylebox_path)
+		EditorInterface.get_resource_filesystem().update_file(stylebox_path)
 		self._named_atlas_styleboxes[atlas_texture_name].take_over_path(stylebox_path)
 
 	return OK

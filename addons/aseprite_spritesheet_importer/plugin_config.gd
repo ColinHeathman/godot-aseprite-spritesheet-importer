@@ -1,11 +1,10 @@
 @tool
-class_name AsepritePluginConfig
 extends RefCounted
 
-const command_key = "aseprite/general/command_path"
-const windows_command_default_value = "C:\\Program Files\\Aseprite\\Aseprite.exe"
-const mac_os_command_default_value = "/Applications/Aseprite.app/Contents/MacOS/aseprite"
-const command_default_value = "aseprite"
+const command_key: String = "aseprite/general/command_path"
+const windows_command_default_value: String = "C:\\Program Files\\Aseprite\\Aseprite.exe"
+const mac_os_command_default_value: String = "/Applications/Aseprite.app/Contents/MacOS/aseprite"
+const command_default_value: String = "aseprite"
 
 var editor_settings: EditorSettings
 
