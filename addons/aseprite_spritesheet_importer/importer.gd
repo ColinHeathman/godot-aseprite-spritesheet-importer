@@ -5,6 +5,10 @@ const AsepriteExecutable = preload("res://addons/aseprite_spritesheet_importer/e
 const AsepriteUtilAtlasTools = preload("res://addons/aseprite_spritesheet_importer/util/atlas_tools.gd")
 const AsepriteUtilSpriteFrameTools = preload("res://addons/aseprite_spritesheet_importer/util/spriteframe_tools.gd")
 
+# (PROOF OF CONCEPT) # the default directories set by user project settings, if empty does textures/ fallback
+const SETTING_SPRITEFRAME_DIR = "aseprite_importer/defaults/spriteframe_directory"
+const SETTING_ATLAS_DIR = "aseprite_importer/defaults/atlas_directory"
+
 var editor: EditorInterface
 var source_file: String
 var save_path: String
@@ -12,7 +16,6 @@ var save_extension: String
 var source_file_folder: String
 var source_file_basename: String
 var source_file_no_ext: String
-var textures_folder: String
 var texture_path: String
 var import_options: Dictionary
 var aseprite_options: AsepriteExecutable.Options
@@ -35,7 +38,6 @@ func use_source_file(source_file: String, save_path: String, save_extension: Str
 	self.source_file_folder = source_file.rsplit("/", true, 1)[0]
 	self.source_file_basename = source_file.rsplit("/", true, 1)[1]
 	self.source_file_no_ext = source_file_basename.rsplit(".", true, 1)[0]
-	self.textures_folder = "%s/textures" % source_file_folder
 
 @warning_ignore("shadowed_variable")
 func use_import_options(import_options: Dictionary) -> void:
@@ -127,15 +129,6 @@ func _make_fallback_texture() -> Error:
 	return OK
 
 func _export_spritesheet() -> Error:
-	
-	# Make textures folder if required
-	if (self.import_options["generate_resources/atlas_textures"] \
-	or self.import_options["generate_resources/spriteframes"]) \
-	and ! DirAccess.dir_exists_absolute(self.textures_folder):
-		DirAccess.make_dir_recursive_absolute(self.textures_folder)
-		# Notify import_plugin to run a scan
-		self.do_scan = true
-
 	# Execute Aseprite
 	var aseprite_result: Array = self.executable.export_spritesheet(self.source_file, self.aseprite_options)
 	if aseprite_result[0] != OK:
@@ -177,8 +170,13 @@ func _generate_atlas_textures() -> Error:
 	if not self.import_options["generate_resources/atlas_textures"]:
 		return OK
 
+	# (PROOF OF CONCEPT)
+	# when generation is requested from the import dock it makes sure the folder exists
+	var atlas_folder: String = _resolve_atlas_folder() 
+	_ensure_directory_exists(atlas_folder)
+
 	var atlas_tools: AsepriteUtilAtlasTools = AsepriteUtilAtlasTools.new()
-	atlas_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
+	atlas_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, atlas_folder) # (PROOF OF CONCEPT)
 	atlas_tools.use_texture(self.spritesheet_texture)
 	atlas_tools.use_editor(self.editor)
 	atlas_tools.split_layers = self.import_options["layers/split_layers"]
@@ -190,8 +188,13 @@ func _generate_spriteframes() -> Error:
 	if not self.import_options["generate_resources/spriteframes"]:
 		return OK
 
+	# (PROOF OF CONCEPT)
+	# when generation is requested from the import dock it makes sure the folder exists
+	var spriteframe_folder: String = _resolve_spriteframe_folder() # (PROOF OF CONCEPT)
+	_ensure_directory_exists(spriteframe_folder) # (PROOF OF CONCEPT)
+
 	var spriteframe_tools: AsepriteUtilSpriteFrameTools = AsepriteUtilSpriteFrameTools.new()
-	spriteframe_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, self.textures_folder)
+	spriteframe_tools.use_spritesheet(self.source_file_no_ext, self.spritesheet_data, spriteframe_folder) # (PROOF OF CONCEPT)
 	spriteframe_tools.use_texture(self.spritesheet_texture)
 	spriteframe_tools.use_editor(self.editor)
 	spriteframe_tools.split_layers = self.import_options["layers/split_layers"]
@@ -230,13 +233,88 @@ func _prune_files() -> Error:
 				return err
 			EditorInterface.get_resource_filesystem().update_file(f)
 	
-	# Delete the folder if it's empty
-	if DirAccess.dir_exists_absolute(self.textures_folder) \
-	and DirAccess.get_files_at(self.textures_folder).size() == 0:
-		var err: Error = DirAccess.remove_absolute(self.textures_folder)
-		if err != OK:
-			return err
-		# Notify import_plugin to run a scan
-		self.do_scan = true
-
+	# (PROOF OF CONCEPT) extra feature
+	# Delete the folder if its empty
+	_prune_empty_folder(_resolve_atlas_folder())
+	_prune_empty_folder(_resolve_spriteframe_folder())
+	
 	return OK
+
+# (PROOF OF CONCEPT)
+# verifies which dir to use based on order of operation
+# 1. checks for custom user directory inputted through the import dock
+# 2. checks default project settings
+# 3. falls back to textures/ within the same folder if neither of the above exists
+func _resolve_spriteframe_folder() -> String:
+	# 1. custom dir
+	var custom_dir: String = self.import_options.get("output/spriteframe_directory", "").strip_edges()
+	if not custom_dir.is_empty():
+		return custom_dir.simplify_path()
+
+	# 2. project default
+	if ProjectSettings.has_setting(SETTING_SPRITEFRAME_DIR):
+		var global_dir: String = str(ProjectSettings.get_setting(SETTING_SPRITEFRAME_DIR)).strip_edges()
+		if not global_dir.is_empty():
+			return global_dir.simplify_path()
+
+	# 3. fallback
+	return self.source_file_folder.path_join("textures").simplify_path()
+
+# (PROOF OF CONCEPT)
+# verifies which dir to use based on order of operation
+# 1. checks for custom user directory inputted through the import dock
+# 2. checks default project settings
+# 3. falls back to textures/ within the same folder if neither of the above exists
+func _resolve_atlas_folder() -> String:
+	# 1. custom dir
+	var custom_dir: String = self.import_options.get("output/atlas_directory", "").strip_edges()
+	if not custom_dir.is_empty():
+		return custom_dir.simplify_path()
+
+	# 2. project default
+	if ProjectSettings.has_setting(SETTING_ATLAS_DIR):
+		var global_dir: String = str(ProjectSettings.get_setting(SETTING_ATLAS_DIR)).strip_edges()
+		if not global_dir.is_empty():
+			return global_dir.simplify_path()
+
+	# 3. fallback
+	return self.source_file_folder.path_join("textures").simplify_path()
+
+# (PROOF OF CONCEPT)
+# function makes sure that the directory exists and if it doesn't it creates it.
+# pushes an Error if the folder can't be created for whatever reason
+func _ensure_directory_exists(path: String) -> Error:
+	if not DirAccess.dir_exists_absolute(path):
+		var err: Error = DirAccess.make_dir_recursive_absolute(path)
+		if err != OK:
+			push_error("Failed to create folder at '%s': Error %d" % [path, err])
+			return err
+		self.do_scan = true
+	return OK
+
+# (PROOF OF CONCEPT)
+# function that removes target directory only if it exists and contains zero files or subfolders.
+# 1. SAFTEY
+# 2. read files and directories
+# 3. if no sub directories or files then delete
+# pushes a Warning if folder can't be deleted for whatever reason
+func _prune_empty_folder(path: String) -> void:
+	var clean_path: String = path.simplify_path()
+	
+	# 1. SO THE FUNCTION DOESN'T DELETE IMPORTANT STUFF 
+	if clean_path.is_empty() or clean_path in ["res:", "res://", ".", "/"]:
+		return
+	if not DirAccess.dir_exists_absolute(clean_path):
+		return
+
+	# 2. reads
+	var files: PackedStringArray = DirAccess.get_files_at(clean_path)
+	var dirs: PackedStringArray = DirAccess.get_directories_at(clean_path)
+
+	# 3. final check and removal
+	if files.is_empty() and dirs.is_empty():
+		var err: Error = DirAccess.remove_absolute(clean_path)
+		if err == OK:
+			self.do_scan = true
+		else:
+			push_warning("Failed to prune empty folder at '%s': Error %d" % [clean_path, err])

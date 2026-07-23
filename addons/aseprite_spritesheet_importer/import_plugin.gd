@@ -139,6 +139,23 @@ const COMPRESSION_NORMAL_MAP = {
 	"description": "Ensure optimum quality if this image will be used as a normal map.",
 }
 
+# (PROOF OF CONCEPT)
+# Output directory paths 
+const CUSTOM_SPRITEFRAME_DIR = {
+	"name": "custom_output/spriteframe_directory",
+	"default_value": "",
+	"description": "Directory path for generated SpriteFrames resources. Leave empty to use ProjectSettings default, or fallback to a 'textures' if defaults don't exist.",
+	"property_hint": PROPERTY_HINT_DIR
+}
+
+# (PROOF OF CONCEPT)
+const CUSTOM_ATLAS_DIR = {
+	"name": "custom_output/atlas_directory",
+	"default_value": "",
+	"description": "Directory path for generated AtlasTexture resources. Leave empty to use ProjectSettings default, or fallback to a 'textures' if defaults don't exist.",
+	"property_hint": PROPERTY_HINT_DIR
+}
+
 # Debug
 const KEEP_JSON = {
 	"name": "debug/keep_json",
@@ -209,6 +226,8 @@ func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 				COMPRESSION_MODE,
 				COMPRESSION_LOSSY_QUALITY,
 				COMPRESSION_NORMAL_MAP,
+				CUSTOM_SPRITEFRAME_DIR, # (PROOF OF CONCEPT)
+				CUSTOM_ATLAS_DIR, # (PROOF OF CONCEPT)
 				KEEP_JSON,
 				KEEP_PNG,
 			]
@@ -217,26 +236,26 @@ func _get_import_options(_path: String, preset_index: int) -> Array[Dictionary]:
 
 func _get_option_visibility(_path: String, option_name: StringName, options: Dictionary) -> bool:
 	# only show "sheet_width" and "sheet_height" if sheet_type = "horizontal", "vertical" or "packed"
-	if option_name == "export_options/sheet_width" or option_name == "export_options/sheet_height":
+	if option_name == &"export_options/sheet_width" or option_name == &"export_options/sheet_height":
 		return (
 			options["export_options/sheet_type"] == AsepriteExecutable.SheetType.HORIZONTAL
 			or options["export_options/sheet_type"] == AsepriteExecutable.SheetType.VERTICAL
 			or options["export_options/sheet_type"] == AsepriteExecutable.SheetType.PACKED
 		)
 	# only show sheet_columns if sheet_type = "rows"
-	if option_name == "export_options/sheet_columns":
+	if option_name == &"export_options/sheet_columns":
 		return options["export_options/sheet_type"] == AsepriteExecutable.SheetType.ROWS
 	# only show sheet_rows if sheet_type = "columns"
-	if option_name == "export_options/sheet_rows":
+	if option_name == &"export_options/sheet_rows":
 		return options["export_options/sheet_type"] == AsepriteExecutable.SheetType.COLUMNS
 
 	# only show trim if slices aren't being used
 	# this is because of a limitation in how slices are implemented in Aseprite
-	if option_name == "export_options/trim":
+	if option_name == &"export_options/trim":
 		return not (options["generate_resources/atlas_textures"] or options["generate_resources/spriteframes"])
 
 	# only show lossy_quality for lossy compression modes
-	if option_name == "compress/lossy_quality":
+	if option_name == &"compress/lossy_quality":
 		return options["compress/mode"] == 1
 
 	return true
